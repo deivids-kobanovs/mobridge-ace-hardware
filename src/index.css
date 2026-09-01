@@ -1,0 +1,98 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "@fontsource/inter/400.css" layer(base);
+@import "@fontsource/inter/500.css" layer(base);
+@import "@fontsource/inter/600.css" layer(base);
+@import "@fontsource/inter/700.css" layer(base);
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --color-brand-50: #fdf3f2;
+  --color-brand-100: #fbe3e1;
+  --color-brand-200: #f7cbc7;
+  --color-brand-300: #efa39b;
+  --color-brand-400: #e2705f;
+  --color-brand-500: #cf4835;
+  --color-brand-600: #b3211d;
+  --color-brand-700: #971d1c;
+  --color-brand-800: #7d1c1d;
+  --color-brand-900: #6a1b1c;
+  --color-brand-950: #390b0c;
+
+  --color-ink-50: #f6f6f7;
+  --color-ink-100: #e7e8ea;
+  --color-ink-200: #cfd1d5;
+  --color-ink-300: #aaadb4;
+  --color-ink-400: #7d818b;
+  --color-ink-500: #5f636d;
+  --color-ink-600: #4b4e57;
+  --color-ink-700: #3d3f47;
+  --color-ink-800: #26282e;
+  --color-ink-900: #1a1b1f;
+  --color-ink-950: #101114;
+
+  --shadow-card: 0 1px 2px 0 rgb(26 27 31 / 0.04), 0 1px 6px -1px rgb(26 27 31 / 0.06);
+  --shadow-popover: 0 8px 24px -6px rgb(26 27 31 / 0.16), 0 2px 8px -2px rgb(26 27 31 / 0.08);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-ink-200);
+  }
+  html {
+    color-scheme: light;
+  }
+  body {
+    @apply bg-ink-50 text-ink-900 antialiased;
+    font-feature-settings: "cv11", "ss01";
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-brand-600);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-ink-200);
+    border-radius: 999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-ink-300);
+  }
+}
+
+@keyframes checkPop {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.animate-check-pop {
+  animation: checkPop 0.3s ease-out;
+}
+
+@keyframes toastIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+.animate-toast-in {
+  animation: toastIn 0.2s ease-out;
+}
