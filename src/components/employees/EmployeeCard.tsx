@@ -27,7 +27,7 @@ export function EmployeeCard({
   return (
     <button
       onClick={onOpen}
-      className="flex flex-col gap-4 rounded-xl border border-ink-200 bg-white p-5 text-left shadow-card transition-shadow hover:shadow-popover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
+      className="flex flex-col gap-4 rounded-xl border border-ink-200 bg-card p-5 text-left shadow-card transition-shadow hover:shadow-popover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
     >
       <div className="flex items-center gap-3">
         <Avatar initials={employee.initials} color={employee.color} size="lg" />
@@ -58,7 +58,7 @@ export function EmployeeCard({
         <Stat value={assignedToday} label="Assigned" />
         <Stat value={completedToday} label="Done" />
         <Stat value={remainingToday} label="Remaining" />
-        <Stat value={blocked} label="Blocked" tone={blocked > 0 ? 'text-brand-600' : undefined} />
+        <Stat value={blocked} label="Blocked" tone={blocked > 0 ? 'text-rose-400' : undefined} />
       </div>
 
       <div>

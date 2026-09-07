@@ -24,7 +24,7 @@ export function RecurrenceEditor({ value, onChange }: { value: RecurrenceConfig;
         <div className="space-y-1.5">
           <label className="text-xs font-semibold text-ink-600">Frequency</label>
           <Select value={value.frequency} onValueChange={(f: RecurrenceFrequency) => onChange({ ...value, frequency: f })}>
-            <SelectTrigger className="bg-white">
+            <SelectTrigger className="bg-card">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -38,7 +38,7 @@ export function RecurrenceEditor({ value, onChange }: { value: RecurrenceConfig;
         </div>
         <div className="space-y-1.5">
           <label className="text-xs font-semibold text-ink-600">Starting</label>
-          <Input type="date" value={value.startDate} min={todayISO()} onChange={(e) => onChange({ ...value, startDate: e.target.value })} className="bg-white" />
+          <Input type="date" value={value.startDate} min={todayISO()} onChange={(e) => onChange({ ...value, startDate: e.target.value })} className="bg-card" />
         </div>
       </div>
 
@@ -51,10 +51,10 @@ export function RecurrenceEditor({ value, onChange }: { value: RecurrenceConfig;
               min={1}
               value={value.interval ?? 1}
               onChange={(e) => onChange({ ...value, interval: Number(e.target.value) || 1 })}
-              className="w-20 bg-white"
+              className="w-20 bg-card"
             />
             <Select value={value.intervalUnit ?? 'weeks'} onValueChange={(u) => onChange({ ...value, intervalUnit: u as RecurrenceConfig['intervalUnit'] })}>
-              <SelectTrigger className="bg-white">
+              <SelectTrigger className="bg-card">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -79,7 +79,7 @@ export function RecurrenceEditor({ value, onChange }: { value: RecurrenceConfig;
                 onClick={() => toggleDay(i)}
                 className={cn(
                   'flex size-9 items-center justify-center rounded-full text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500',
-                  value.daysOfWeek?.includes(i) ? 'bg-brand-600 text-white' : 'bg-white text-ink-500 border border-ink-200 hover:bg-ink-100',
+                  value.daysOfWeek?.includes(i) ? 'bg-brand-600 text-ink-50' : 'bg-card text-ink-500 border border-ink-200 hover:bg-ink-100',
                 )}
                 aria-pressed={value.daysOfWeek?.includes(i)}
                 aria-label={['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][i]}
@@ -100,7 +100,7 @@ export function RecurrenceEditor({ value, onChange }: { value: RecurrenceConfig;
             max={31}
             value={value.dayOfMonth ?? 1}
             onChange={(e) => onChange({ ...value, dayOfMonth: Number(e.target.value) || 1 })}
-            className="w-24 bg-white"
+            className="w-24 bg-card"
           />
         </div>
       )}
@@ -121,7 +121,7 @@ export function RecurrenceEditor({ value, onChange }: { value: RecurrenceConfig;
                 value={value.endDate ?? value.startDate}
                 min={value.startDate}
                 onChange={(e) => onChange({ ...value, endDate: e.target.value })}
-                className="ml-1 w-auto bg-white"
+                className="ml-1 w-auto bg-card"
               />
             )}
           </label>
@@ -140,7 +140,7 @@ export function RecurrenceEditor({ value, onChange }: { value: RecurrenceConfig;
                 min={1}
                 value={value.occurrences ?? 10}
                 onChange={(e) => onChange({ ...value, occurrences: Number(e.target.value) || 1 })}
-                className="ml-1 w-20 bg-white"
+                className="ml-1 w-20 bg-card"
               />
             )}
             occurrences

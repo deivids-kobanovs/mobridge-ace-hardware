@@ -37,9 +37,9 @@ const ICONS: Record<ActivityType, ComponentType<{ className?: string }>> = {
 }
 
 const COLORS: Partial<Record<ActivityType, string>> = {
-  blocked: 'bg-brand-100 text-brand-700',
-  overdue: 'bg-brand-100 text-brand-700',
-  escalated: 'bg-brand-100 text-brand-700',
+  blocked: 'bg-rose-100 text-rose-700',
+  overdue: 'bg-rose-100 text-rose-700',
+  escalated: 'bg-rose-100 text-rose-700',
   cancelled: 'bg-ink-200 text-ink-600',
   completed: 'bg-emerald-100 text-emerald-700',
   approved: 'bg-emerald-100 text-emerald-700',

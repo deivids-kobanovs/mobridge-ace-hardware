@@ -20,7 +20,7 @@ export function AckManagerPanel({
   const [timing, setTiming] = useState<'now' | '24h' | '3d' | 'custom'>('now')
 
   return (
-    <div className="space-y-4 rounded-xl border border-ink-200 bg-white p-4">
+    <div className="space-y-4 rounded-xl border border-ink-200 bg-card p-4">
       <AckStatsBar stats={stats} />
 
       {stats.acknowledgedIds.length > 0 && (

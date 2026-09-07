@@ -12,7 +12,7 @@ export function PolicyCard({ policy, category, stats, onOpen }: { policy: Policy
   return (
     <button
       onClick={onOpen}
-      className="flex flex-col gap-3 rounded-xl border border-ink-200 bg-white p-5 text-left shadow-card transition-shadow hover:shadow-popover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
+      className="flex flex-col gap-3 rounded-xl border border-ink-200 bg-card p-5 text-left shadow-card transition-shadow hover:shadow-popover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
     >
       <div className="flex items-start justify-between gap-2">
         <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-brand-50 text-brand-600">

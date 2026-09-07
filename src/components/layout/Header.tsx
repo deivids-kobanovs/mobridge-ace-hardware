@@ -23,7 +23,7 @@ export function Header({
   const greeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening'
 
   return (
-    <header className="sticky top-0 z-30 border-b border-ink-200 bg-white/90 backdrop-blur">
+    <header className="sticky top-0 z-30 border-b border-ink-200 bg-card/90 backdrop-blur">
       <div className="flex items-center gap-3 px-4 py-3 lg:px-8">
         <button onClick={onOpenMobileNav} className="rounded-md p-2 text-ink-600 hover:bg-ink-100 lg:hidden" aria-label="Open menu">
           <Menu className="size-5" />
@@ -44,7 +44,7 @@ export function Header({
               value={searchQuery}
               onChange={(e) => onSearchChange(e.target.value)}
               placeholder="Search tasks, employees, departments…"
-              className="h-10 w-full rounded-lg border border-ink-200 bg-ink-50 pl-9 pr-3 text-sm text-ink-900 placeholder:text-ink-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:bg-white"
+              className="h-10 w-full rounded-lg border border-ink-200 bg-ink-50 pl-9 pr-3 text-sm text-ink-900 placeholder:text-ink-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:bg-card"
             />
           </label>
         </div>

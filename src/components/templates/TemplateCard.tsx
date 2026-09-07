@@ -20,7 +20,7 @@ export function TemplateCard({
   onAssign: () => void
 }) {
   return (
-    <div className="flex flex-col gap-3 rounded-xl border border-ink-200 bg-white p-5 shadow-card">
+    <div className="flex flex-col gap-3 rounded-xl border border-ink-200 bg-card p-5 shadow-card">
       <div className="flex items-start justify-between gap-2">
         <div>
           <h3 className="text-sm font-semibold text-ink-900">{template.name}</h3>

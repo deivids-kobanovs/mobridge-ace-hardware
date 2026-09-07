@@ -128,7 +128,7 @@ export function TaskDetailPanel({ taskId, onClose }: { taskId: string | null; on
               )}
 
               {task.managerNotes && (
-                <div className="rounded-lg border border-ink-200 bg-white p-4">
+                <div className="rounded-lg border border-ink-200 bg-card p-4">
                   <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-ink-400">Manager notes</p>
                   <p className="whitespace-pre-line text-sm text-ink-700">{task.managerNotes}</p>
                 </div>
@@ -276,7 +276,7 @@ export function TaskDetailPanel({ taskId, onClose }: { taskId: string | null; on
               )}
 
               {status === 'Overdue' && (
-                <p className="flex items-center gap-2 rounded-lg bg-brand-50 px-3 py-2.5 text-sm font-medium text-brand-700">
+                <p className="flex items-center gap-2 rounded-lg bg-rose-50 px-3 py-2.5 text-sm font-medium text-rose-700">
                   <AlertTriangle className="size-4" />
                   This task is overdue.
                 </p>
@@ -306,7 +306,7 @@ export function TaskDetailPanel({ taskId, onClose }: { taskId: string | null; on
               </div>
             </div>
 
-            <div className="sticky bottom-0 left-0 right-0 -mx-6 -mb-5 mt-6 border-t border-ink-200 bg-white px-6 py-4">
+            <div className="sticky bottom-0 left-0 right-0 -mx-6 -mb-5 mt-6 border-t border-ink-200 bg-card px-6 py-4">
               {isEmployeeView && assignedToMe && task.status === 'Not Started' && (
                 <Button className="w-full" onClick={() => app.startTask(task.id)}>
                   Start Task

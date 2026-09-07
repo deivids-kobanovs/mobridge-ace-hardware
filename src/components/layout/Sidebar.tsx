@@ -48,11 +48,11 @@ export function Sidebar({
   const content = (
     <div className="flex h-full flex-col">
       <div className="flex items-center gap-2.5 px-5 py-5">
-        <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-brand-600 text-white">
+        <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-brand-600 text-ink-50">
           <Wrench className="size-5" />
         </span>
         <div className="min-w-0 leading-tight">
-          <p className="truncate text-sm font-bold tracking-tight text-ink-900">TaskCopilot</p>
+          <p className="truncate text-sm font-bold tracking-tight text-ink-900">Workgrid</p>
           <p className="truncate text-xs text-ink-500">{COMPANY_NAME}</p>
         </div>
         <button
@@ -83,7 +83,7 @@ export function Sidebar({
               <Icon className={cn('size-4 shrink-0', active ? 'text-brand-600' : 'text-ink-400')} />
               <span className="flex-1 text-left">{item.label}</span>
               {item.id === 'notifications' && unread > 0 && (
-                <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-brand-600 px-1 text-[11px] font-semibold text-white">
+                <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-brand-600 px-1 text-[11px] font-semibold text-ink-50">
                   {unread}
                 </span>
               )}
@@ -97,11 +97,11 @@ export function Sidebar({
 
   return (
     <>
-      <aside className="hidden w-64 shrink-0 border-r border-ink-200 bg-white lg:block">{content}</aside>
+      <aside className="hidden w-64 shrink-0 border-r border-ink-200 bg-card lg:block">{content}</aside>
       {mobileOpen && (
         <div className="fixed inset-0 z-40 lg:hidden">
-          <div className="absolute inset-0 bg-ink-950/40" onClick={onCloseMobile} aria-hidden="true" />
-          <aside className="absolute inset-y-0 left-0 w-72 bg-white shadow-popover">{content}</aside>
+          <div className="absolute inset-0 bg-black/60" onClick={onCloseMobile} aria-hidden="true" />
+          <aside className="absolute inset-y-0 left-0 w-72 bg-card shadow-popover">{content}</aside>
         </div>
       )}
     </>

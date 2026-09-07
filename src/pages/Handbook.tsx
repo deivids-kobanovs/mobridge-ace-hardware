@@ -84,7 +84,7 @@ export function HandbookPage() {
         </div>
         <button
           onClick={() => setMobileTocOpen((v) => !v)}
-          className="flex items-center gap-1.5 rounded-lg border border-ink-200 bg-white px-3 py-2 text-xs font-semibold text-ink-600 lg:hidden"
+          className="flex items-center gap-1.5 rounded-lg border border-ink-200 bg-card px-3 py-2 text-xs font-semibold text-ink-600 lg:hidden"
         >
           <Menu className="size-4" />
           Chapters
@@ -92,7 +92,7 @@ export function HandbookPage() {
       </div>
 
       {handbook.requiresFullAcknowledgement && (
-        <div className="rounded-xl border border-ink-200 bg-white p-4">
+        <div className="rounded-xl border border-ink-200 bg-card p-4">
           {isManager ? (
             <AckManagerPanel
               stats={overallStats}
@@ -114,7 +114,7 @@ export function HandbookPage() {
       )}
 
       <div className="grid gap-4 lg:grid-cols-[15rem_1fr]">
-        <aside className={cn('space-y-1 rounded-xl border border-ink-200 bg-white p-2', !mobileTocOpen && 'hidden lg:block')}>
+        <aside className={cn('space-y-1 rounded-xl border border-ink-200 bg-card p-2', !mobileTocOpen && 'hidden lg:block')}>
           {sections.map((s, i) => (
             <button
               key={s.id}
@@ -144,7 +144,7 @@ export function HandbookPage() {
           )}
         </aside>
 
-        <div className="rounded-xl border border-ink-200 bg-white p-6 sm:p-8">
+        <div className="rounded-xl border border-ink-200 bg-card p-6 sm:p-8">
           <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
             <h2 className="text-xl font-bold text-ink-900">{showOriginal ? active.title : (translated.title ?? active.title)}</h2>
             {isManager && (

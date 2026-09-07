@@ -15,7 +15,7 @@ export function TaskListItem({ task, now, onOpen }: { task: Task; now: Date; onO
   return (
     <button
       onClick={() => onOpen(task.id)}
-      className="flex w-full flex-col gap-3 rounded-xl border border-ink-200 bg-white p-4 text-left shadow-card transition-shadow hover:shadow-popover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 sm:flex-row sm:items-center"
+      className="flex w-full flex-col gap-3 rounded-xl border border-ink-200 bg-card p-4 text-left shadow-card transition-shadow hover:shadow-popover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 sm:flex-row sm:items-center"
     >
       <div className="flex min-w-0 flex-1 items-start gap-3">
         {assignee ? (
@@ -64,7 +64,7 @@ export function TaskListItem({ task, now, onOpen }: { task: Task; now: Date; onO
           <PriorityBadge priority={task.priority} />
           <StatusBadge status={status} />
         </div>
-        <p className={cn('text-xs font-medium', status === 'Overdue' ? 'text-brand-600' : 'text-ink-400')}>Due {formatTime12(task.dueTime)}</p>
+        <p className={cn('text-xs font-medium', status === 'Overdue' ? 'text-rose-400' : 'text-ink-400')}>Due {formatTime12(task.dueTime)}</p>
       </div>
     </button>
   )

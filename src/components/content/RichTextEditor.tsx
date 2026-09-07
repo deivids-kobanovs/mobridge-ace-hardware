@@ -56,7 +56,7 @@ export function RichTextEditor({ value, onChange, minRows = 10 }: { value: strin
               type="button"
               title={tool.label}
               onClick={() => applyTool(tool)}
-              className="flex size-8 items-center justify-center rounded-md text-ink-500 hover:bg-white hover:text-ink-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
+              className="flex size-8 items-center justify-center rounded-md text-ink-500 hover:bg-card hover:text-ink-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
             >
               <tool.icon className="size-4" />
             </button>
@@ -78,7 +78,7 @@ export function RichTextEditor({ value, onChange, minRows = 10 }: { value: strin
           placeholder={'## Heading\n\nWrite the procedure here…\n\n1. First step\n2. Second step\n\n- [ ] Checklist item'}
         />
       </TabsContent>
-      <TabsContent value="preview" className={cn('mt-2 rounded-lg border border-ink-200 bg-white p-4', !value && 'text-sm text-ink-400')}>
+      <TabsContent value="preview" className={cn('mt-2 rounded-lg border border-ink-200 bg-card p-4', !value && 'text-sm text-ink-400')}>
         {value ? <RichTextViewer content={value} /> : 'Nothing to preview yet.'}
       </TabsContent>
     </Tabs>

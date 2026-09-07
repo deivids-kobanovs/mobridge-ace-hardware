@@ -51,7 +51,7 @@ export const SEED_HANDBOOK: Handbook = {
       updatedAt: ago(45),
       updatedBy: 'Alex Rivera',
       content:
-        'Store hours are Monday–Saturday 7:00 AM–7:00 PM and Sunday 9:00 AM–5:00 PM.\n\nShifts are posted in TaskCopilot at least one week in advance. Please clock in no more than 5 minutes before your scheduled start time and clock out promptly at the end of your shift.\n\nIf you are running late, call the store directly — do not just send a text to a coworker.',
+        'Store hours are Monday–Saturday 7:00 AM–7:00 PM and Sunday 9:00 AM–5:00 PM.\n\nShifts are posted in Workgrid at least one week in advance. Please clock in no more than 5 minutes before your scheduled start time and clock out promptly at the end of your shift.\n\nIf you are running late, call the store directly — do not just send a text to a coworker.',
     },
     {
       id: 'hb_attendance',

@@ -50,7 +50,7 @@ function FilterSelect({
 }) {
   return (
     <Select value={value} onValueChange={onChange}>
-      <SelectTrigger className="h-9 w-auto min-w-[9rem] bg-white text-xs">
+      <SelectTrigger className="h-9 w-auto min-w-[9rem] bg-card text-xs">
         <span className="mr-1 text-ink-400">{label}:</span>
         <SelectValue />
       </SelectTrigger>

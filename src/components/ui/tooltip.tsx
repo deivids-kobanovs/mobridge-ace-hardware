@@ -14,7 +14,7 @@ export const TooltipContent = React.forwardRef<
     <TooltipPrimitive.Content
       ref={ref}
       sideOffset={sideOffset}
-      className={cn('z-50 rounded-md bg-ink-900 px-2.5 py-1.5 text-xs text-white shadow-popover', className)}
+      className={cn('z-50 rounded-md bg-ink-900 px-2.5 py-1.5 text-xs text-ink-50 shadow-popover', className)}
       {...props}
     />
   </TooltipPrimitive.Portal>

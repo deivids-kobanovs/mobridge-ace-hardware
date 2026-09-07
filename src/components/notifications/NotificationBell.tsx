@@ -31,12 +31,12 @@ export function NotificationBell({ scope, employeeId, onOpenTask }: { scope: Rol
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
-        className="relative flex size-10 items-center justify-center rounded-lg border border-ink-200 bg-white text-ink-600 shadow-sm hover:bg-ink-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
+        className="relative flex size-10 items-center justify-center rounded-lg border border-ink-200 bg-card text-ink-600 shadow-sm hover:bg-ink-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
         aria-label={`Notifications${unread > 0 ? `, ${unread} unread` : ''}`}
       >
         <Bell className="size-5" />
         {unread > 0 && (
-          <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-brand-600 px-1 text-[11px] font-semibold text-white">
+          <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-brand-600 px-1 text-[11px] font-semibold text-ink-50">
             {unread}
           </span>
         )}
@@ -69,7 +69,7 @@ export function NotificationBell({ scope, employeeId, onOpenTask }: { scope: Rol
                     className={cn(
                       'mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-full',
                       n.type === 'overdue' || n.type === 'escalation' || n.type === 'blocked'
-                        ? 'bg-brand-100 text-brand-700'
+                        ? 'bg-rose-100 text-rose-700'
                         : n.type === 'approved'
                           ? 'bg-emerald-100 text-emerald-700'
                           : n.type === 'returned'

@@ -67,11 +67,11 @@ export function Policies({ initialPolicyId }: { initialPolicyId?: string | null 
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search policies…"
-            className="h-9 w-full rounded-lg border border-ink-200 bg-white pl-9 pr-3 text-sm placeholder:text-ink-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
+            className="h-9 w-full rounded-lg border border-ink-200 bg-card pl-9 pr-3 text-sm placeholder:text-ink-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
           />
         </label>
         <Select value={category} onValueChange={setCategory}>
-          <SelectTrigger className="h-9 w-auto min-w-[10rem] bg-white text-xs">
+          <SelectTrigger className="h-9 w-auto min-w-[10rem] bg-card text-xs">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
@@ -85,7 +85,7 @@ export function Policies({ initialPolicyId }: { initialPolicyId?: string | null 
         </Select>
         {isManager && (
           <Select value={status} onValueChange={setStatus}>
-            <SelectTrigger className="h-9 w-auto min-w-[8rem] bg-white text-xs">
+            <SelectTrigger className="h-9 w-auto min-w-[8rem] bg-card text-xs">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -98,7 +98,7 @@ export function Policies({ initialPolicyId }: { initialPolicyId?: string | null 
         <button
           onClick={() => setNeedsAttentionOnly((v) => !v)}
           className={`flex h-9 items-center gap-1.5 rounded-lg border px-3 text-xs font-semibold transition-colors ${
-            needsAttentionOnly ? 'border-amber-300 bg-amber-50 text-amber-800' : 'border-ink-200 bg-white text-ink-500 hover:bg-ink-50'
+            needsAttentionOnly ? 'border-amber-300 bg-amber-50 text-amber-800' : 'border-ink-200 bg-card text-ink-500 hover:bg-ink-50'
           }`}
         >
           <AlertCircle className="size-3.5" />

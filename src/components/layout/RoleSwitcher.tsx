@@ -15,7 +15,7 @@ export function RoleSwitcher() {
           onClick={() => setRole('manager')}
           className={cn(
             'flex items-center gap-1.5 rounded-md px-2.5 py-1.5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500',
-            role === 'manager' ? 'bg-white text-brand-700 shadow-sm' : 'text-ink-500 hover:text-ink-800',
+            role === 'manager' ? 'bg-card text-brand-700 shadow-sm' : 'text-ink-500 hover:text-ink-800',
           )}
           aria-pressed={role === 'manager'}
         >
@@ -26,7 +26,7 @@ export function RoleSwitcher() {
           onClick={() => setRole('employee')}
           className={cn(
             'flex items-center gap-1.5 rounded-md px-2.5 py-1.5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500',
-            role === 'employee' ? 'bg-white text-brand-700 shadow-sm' : 'text-ink-500 hover:text-ink-800',
+            role === 'employee' ? 'bg-card text-brand-700 shadow-sm' : 'text-ink-500 hover:text-ink-800',
           )}
           aria-pressed={role === 'employee'}
         >
@@ -37,7 +37,7 @@ export function RoleSwitcher() {
 
       {role === 'employee' && (
         <DropdownMenu>
-          <DropdownMenuTrigger className="flex items-center gap-1.5 rounded-lg border border-ink-200 bg-white px-2.5 py-1.5 text-xs font-semibold text-ink-700 shadow-sm hover:bg-ink-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
+          <DropdownMenuTrigger className="flex items-center gap-1.5 rounded-lg border border-ink-200 bg-card px-2.5 py-1.5 text-xs font-semibold text-ink-700 shadow-sm hover:bg-ink-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
             {currentEmployee?.name ?? 'Choose employee'}
             <ChevronDown className="size-3.5 opacity-60" />
           </DropdownMenuTrigger>

@@ -57,7 +57,7 @@ export function AssignmentPicker({ value, onChange }: { value: Assignment; onCha
             onClick={() => setType(opt.value)}
             className={cn(
               'flex flex-col items-start gap-1 rounded-lg border px-3 py-2.5 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500',
-              value.type === opt.value ? 'border-brand-500 bg-brand-50 text-brand-800' : 'border-ink-200 bg-white text-ink-600 hover:bg-ink-50',
+              value.type === opt.value ? 'border-brand-500 bg-brand-50 text-brand-800' : 'border-ink-200 bg-card text-ink-600 hover:bg-ink-50',
             )}
           >
             <span className="flex items-center gap-1.5 text-xs font-semibold">
@@ -151,18 +151,18 @@ export function AssignmentPicker({ value, onChange }: { value: Assignment; onCha
 
 function CompletionModeToggle({ value, onChange }: { value: CompletionMode; onChange: (m: CompletionMode) => void }) {
   return (
-    <div className="flex rounded-md border border-ink-200 bg-white p-0.5 text-xs font-semibold">
+    <div className="flex rounded-md border border-ink-200 bg-card p-0.5 text-xs font-semibold">
       <button
         type="button"
         onClick={() => onChange('any')}
-        className={cn('rounded px-2.5 py-1 transition-colors', value === 'any' ? 'bg-brand-600 text-white' : 'text-ink-500 hover:text-ink-800')}
+        className={cn('rounded px-2.5 py-1 transition-colors', value === 'any' ? 'bg-brand-600 text-ink-50' : 'text-ink-500 hover:text-ink-800')}
       >
         Any one can complete
       </button>
       <button
         type="button"
         onClick={() => onChange('all')}
-        className={cn('rounded px-2.5 py-1 transition-colors', value === 'all' ? 'bg-brand-600 text-white' : 'text-ink-500 hover:text-ink-800')}
+        className={cn('rounded px-2.5 py-1 transition-colors', value === 'all' ? 'bg-brand-600 text-ink-50' : 'text-ink-500 hover:text-ink-800')}
       >
         Everyone must complete
       </button>

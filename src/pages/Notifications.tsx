@@ -48,7 +48,7 @@ export function NotificationsPage({ onOpenTask }: { onOpenTask: (id: string) => 
                 if (n.taskId) onOpenTask(n.taskId)
               }}
               className={cn(
-                'flex w-full items-start gap-3 rounded-xl border border-ink-200 bg-white p-4 text-left shadow-card transition-shadow hover:shadow-popover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500',
+                'flex w-full items-start gap-3 rounded-xl border border-ink-200 bg-card p-4 text-left shadow-card transition-shadow hover:shadow-popover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500',
                 !n.read && 'border-brand-200 bg-brand-50/40',
               )}
             >
@@ -56,7 +56,7 @@ export function NotificationsPage({ onOpenTask }: { onOpenTask: (id: string) => 
                 className={cn(
                   'flex size-9 shrink-0 items-center justify-center rounded-full',
                   n.type === 'overdue' || n.type === 'escalation' || n.type === 'blocked'
-                    ? 'bg-brand-100 text-brand-700'
+                    ? 'bg-rose-100 text-rose-700'
                     : n.type === 'approved'
                       ? 'bg-emerald-100 text-emerald-700'
                       : n.type === 'returned'

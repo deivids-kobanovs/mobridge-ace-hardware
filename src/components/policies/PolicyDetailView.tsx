@@ -71,7 +71,7 @@ export function PolicyDetailView({ policyId, onBack }: { policyId: string; onBac
         Back to Policies
       </Button>
 
-      <div className="rounded-2xl border border-ink-200 bg-white p-6 sm:p-8">
+      <div className="rounded-2xl border border-ink-200 bg-card p-6 sm:p-8">
         <div className="mb-4 flex flex-wrap items-center gap-2">
           {category && <Badge variant="neutral">{category.name}</Badge>}
           <Badge variant={policy.status === 'Published' ? 'success' : 'outline'}>{policy.status}</Badge>

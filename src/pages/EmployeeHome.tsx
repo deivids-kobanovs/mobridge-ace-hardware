@@ -54,7 +54,7 @@ export function EmployeeHome({
         </p>
       </div>
 
-      <div className="rounded-xl border border-ink-200 bg-white p-4 shadow-card">
+      <div className="rounded-xl border border-ink-200 bg-card p-4 shadow-card">
         <div className="mb-1.5 flex items-center justify-between">
           <p className="text-sm font-semibold text-ink-900">Shift progress</p>
           <p className="text-sm font-bold text-brand-600">{shiftProgress}%</p>
@@ -99,7 +99,7 @@ export function EmployeeHome({
         </div>
       )}
 
-      <div className="rounded-xl border border-ink-200 bg-white p-4 shadow-card">
+      <div className="rounded-xl border border-ink-200 bg-card p-4 shadow-card">
         <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-ink-400">Company Resources</p>
         <div className="grid grid-cols-2 gap-2">
           <button

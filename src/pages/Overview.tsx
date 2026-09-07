@@ -64,7 +64,7 @@ export function Overview({
                     className="flex w-full items-center justify-between gap-2 rounded-lg bg-ink-50 px-3 py-2 text-left text-xs hover:bg-ink-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
                   >
                     <span className="truncate font-medium text-ink-700">{t.title}</span>
-                    <span className="shrink-0 rounded-full bg-white px-2 py-0.5 font-semibold text-ink-500">{t.status}</span>
+                    <span className="shrink-0 rounded-full bg-card px-2 py-0.5 font-semibold text-ink-500">{t.status}</span>
                   </button>
                 ))}
               </div>

@@ -33,7 +33,7 @@ export const SEED_POLICIES: Policy[] = [
     publishedAt: daysAgoIso(2),
     requiresAcknowledgement: true,
     content:
-      '## Purpose\n\nThis procedure ensures the store opens safely, consistently, and ready for customers every morning.\n\n## Steps\n\n1. Unlock the main entrance and disable the alarm system within 60 seconds.\n2. Turn on all sales-floor and stockroom lighting.\n3. Inspect both emergency exits to confirm they are unobstructed and unlocked from the inside.\n4. Count the opening cash drawer against the previous night\'s closing total.\n5. Check the front entrance and vestibule for cleanliness; sweep if needed.\n6. Review the overnight message log left by the closing associate.\n7. Complete the "Store Opening Checklist" task in TaskCopilot before unlocking customer doors.\n\n## Safety notes\n\n- Never prop open the emergency exits.\n- If the alarm does not disarm within 60 seconds, call the alarm monitoring company immediately — do not enter the sales floor.\n\n## Who this applies to\n\nAny associate scheduled as opening lead.',
+      '## Purpose\n\nThis procedure ensures the store opens safely, consistently, and ready for customers every morning.\n\n## Steps\n\n1. Unlock the main entrance and disable the alarm system within 60 seconds.\n2. Turn on all sales-floor and stockroom lighting.\n3. Inspect both emergency exits to confirm they are unobstructed and unlocked from the inside.\n4. Count the opening cash drawer against the previous night\'s closing total.\n5. Check the front entrance and vestibule for cleanliness; sweep if needed.\n6. Review the overnight message log left by the closing associate.\n7. Complete the "Store Opening Checklist" task in Workgrid before unlocking customer doors.\n\n## Safety notes\n\n- Never prop open the emergency exits.\n- If the alarm does not disarm within 60 seconds, call the alarm monitoring company immediately — do not enter the sales floor.\n\n## Who this applies to\n\nAny associate scheduled as opening lead.',
     versions: [
       {
         policyId: 'pol_opening',
@@ -51,7 +51,7 @@ export const SEED_POLICIES: Policy[] = [
         title: 'Store Opening Procedure',
         description: 'Step-by-step routine for unlocking, disarming, and preparing the store before customers arrive.',
         content:
-          '## Steps\n\n1. Unlock the main entrance and disable the alarm.\n2. Turn on all sales-floor and stockroom lighting.\n3. Inspect both emergency exits.\n4. Count the opening cash drawer.\n5. Review the overnight message log.\n6. Complete the opening checklist in TaskCopilot.',
+          '## Steps\n\n1. Unlock the main entrance and disable the alarm.\n2. Turn on all sales-floor and stockroom lighting.\n3. Inspect both emergency exits.\n4. Count the opening cash drawer.\n5. Review the overnight message log.\n6. Complete the opening checklist in Workgrid.',
         summaryOfChanges: 'Added emergency exit inspection and overnight message log review as required steps.',
         originalLanguage: 'en',
         publishedAt: daysAgoIso(65),
@@ -63,7 +63,7 @@ export const SEED_POLICIES: Policy[] = [
         title: 'Store Opening Procedure',
         description: 'Step-by-step routine for unlocking, disarming, and preparing the store before customers arrive.',
         content:
-          '## Purpose\n\nThis procedure ensures the store opens safely, consistently, and ready for customers every morning.\n\n## Steps\n\n1. Unlock the main entrance and disable the alarm system within 60 seconds.\n2. Turn on all sales-floor and stockroom lighting.\n3. Inspect both emergency exits to confirm they are unobstructed and unlocked from the inside.\n4. Count the opening cash drawer against the previous night\'s closing total.\n5. Check the front entrance and vestibule for cleanliness; sweep if needed.\n6. Review the overnight message log left by the closing associate.\n7. Complete the "Store Opening Checklist" task in TaskCopilot before unlocking customer doors.\n\n## Safety notes\n\n- Never prop open the emergency exits.\n- If the alarm does not disarm within 60 seconds, call the alarm monitoring company immediately — do not enter the sales floor.\n\n## Who this applies to\n\nAny associate scheduled as opening lead.',
+          '## Purpose\n\nThis procedure ensures the store opens safely, consistently, and ready for customers every morning.\n\n## Steps\n\n1. Unlock the main entrance and disable the alarm system within 60 seconds.\n2. Turn on all sales-floor and stockroom lighting.\n3. Inspect both emergency exits to confirm they are unobstructed and unlocked from the inside.\n4. Count the opening cash drawer against the previous night\'s closing total.\n5. Check the front entrance and vestibule for cleanliness; sweep if needed.\n6. Review the overnight message log left by the closing associate.\n7. Complete the "Store Opening Checklist" task in Workgrid before unlocking customer doors.\n\n## Safety notes\n\n- Never prop open the emergency exits.\n- If the alarm does not disarm within 60 seconds, call the alarm monitoring company immediately — do not enter the sales floor.\n\n## Who this applies to\n\nAny associate scheduled as opening lead.',
         summaryOfChanges: 'Added a 60-second alarm disarm window and clarified the safety notes for a false alarm.',
         originalLanguage: 'en',
         publishedAt: daysAgoIso(2),
@@ -87,7 +87,7 @@ export const SEED_POLICIES: Policy[] = [
     publishedAt: daysAgoIso(5),
     requiresAcknowledgement: true,
     content:
-      '## Purpose\n\nA consistent closing routine protects the store, our cash, and our team.\n\n## Steps\n\n1. Announce last call 15 minutes before closing time.\n2. Clean and organize all checkout counters.\n3. Return misplaced merchandise to the correct aisles.\n4. Secure all outdoor displays and bring in seasonal signage.\n5. Check both emergency exits are closed and locked.\n6. Count down all registers and prepare the bank deposit.\n7. **Photograph the locked storage area** and attach it to the closing checklist.\n8. Empty all designated trash containers.\n9. Lock all entrances and set the alarm.\n10. Complete the final store walkthrough before leaving.\n11. Submit the closing checklist for manager approval in TaskCopilot.\n\n## Safety notes\n\n- Never leave the building alone after dark — closing must be done in pairs.\n- If the alarm fails to set, contact the on-call manager before leaving.',
+      '## Purpose\n\nA consistent closing routine protects the store, our cash, and our team.\n\n## Steps\n\n1. Announce last call 15 minutes before closing time.\n2. Clean and organize all checkout counters.\n3. Return misplaced merchandise to the correct aisles.\n4. Secure all outdoor displays and bring in seasonal signage.\n5. Check both emergency exits are closed and locked.\n6. Count down all registers and prepare the bank deposit.\n7. **Photograph the locked storage area** and attach it to the closing checklist.\n8. Empty all designated trash containers.\n9. Lock all entrances and set the alarm.\n10. Complete the final store walkthrough before leaving.\n11. Submit the closing checklist for manager approval in Workgrid.\n\n## Safety notes\n\n- Never leave the building alone after dark — closing must be done in pairs.\n- If the alarm fails to set, contact the on-call manager before leaving.',
     versions: [
       {
         policyId: 'pol_closing',
@@ -106,7 +106,7 @@ export const SEED_POLICIES: Policy[] = [
         title: 'Store Closing Procedure',
         description: 'How to secure the building, cash, and equipment at the end of the day.',
         content:
-          '## Purpose\n\nA consistent closing routine protects the store, our cash, and our team.\n\n## Steps\n\n1. Announce last call 15 minutes before closing time.\n2. Clean and organize all checkout counters.\n3. Return misplaced merchandise to the correct aisles.\n4. Secure all outdoor displays and bring in seasonal signage.\n5. Check both emergency exits are closed and locked.\n6. Count down all registers and prepare the bank deposit.\n7. **Photograph the locked storage area** and attach it to the closing checklist.\n8. Empty all designated trash containers.\n9. Lock all entrances and set the alarm.\n10. Complete the final store walkthrough before leaving.\n11. Submit the closing checklist for manager approval in TaskCopilot.\n\n## Safety notes\n\n- Never leave the building alone after dark — closing must be done in pairs.\n- If the alarm fails to set, contact the on-call manager before leaving.',
+          '## Purpose\n\nA consistent closing routine protects the store, our cash, and our team.\n\n## Steps\n\n1. Announce last call 15 minutes before closing time.\n2. Clean and organize all checkout counters.\n3. Return misplaced merchandise to the correct aisles.\n4. Secure all outdoor displays and bring in seasonal signage.\n5. Check both emergency exits are closed and locked.\n6. Count down all registers and prepare the bank deposit.\n7. **Photograph the locked storage area** and attach it to the closing checklist.\n8. Empty all designated trash containers.\n9. Lock all entrances and set the alarm.\n10. Complete the final store walkthrough before leaving.\n11. Submit the closing checklist for manager approval in Workgrid.\n\n## Safety notes\n\n- Never leave the building alone after dark — closing must be done in pairs.\n- If the alarm fails to set, contact the on-call manager before leaving.',
         summaryOfChanges: 'Employees must now photograph the locked storage area before completing the closing checklist. Also added the two-person closing safety rule.',
         originalLanguage: 'en',
         publishedAt: daysAgoIso(5),
@@ -387,7 +387,7 @@ export const SEED_POLICIES: Policy[] = [
     publishedAt: daysAgoIso(150),
     requiresAcknowledgement: false,
     content:
-      '## Shift handoff\n\nLeave a note in the overnight message log for anything the next shift needs to know.\n\n## Manager announcements\n\nManagers post store-wide announcements in TaskCopilot. Check your dashboard at the start of every shift.\n\n## Personal phones\n\nKeep personal phone use to the breakroom during scheduled breaks.',
+      '## Shift handoff\n\nLeave a note in the overnight message log for anything the next shift needs to know.\n\n## Manager announcements\n\nManagers post store-wide announcements in Workgrid. Check your dashboard at the start of every shift.\n\n## Personal phones\n\nKeep personal phone use to the breakroom during scheduled breaks.',
     versions: [
       {
         policyId: 'pol_communication',
@@ -395,7 +395,7 @@ export const SEED_POLICIES: Policy[] = [
         title: 'Store Communication Standards',
         description: 'How shift handoffs, announcements, and manager messages should be shared with the team.',
         content:
-          '## Shift handoff\n\nLeave a note in the overnight message log for anything the next shift needs to know.\n\n## Manager announcements\n\nManagers post store-wide announcements in TaskCopilot. Check your dashboard at the start of every shift.\n\n## Personal phones\n\nKeep personal phone use to the breakroom during scheduled breaks.',
+          '## Shift handoff\n\nLeave a note in the overnight message log for anything the next shift needs to know.\n\n## Manager announcements\n\nManagers post store-wide announcements in Workgrid. Check your dashboard at the start of every shift.\n\n## Personal phones\n\nKeep personal phone use to the breakroom during scheduled breaks.',
         originalLanguage: 'en',
         publishedAt: daysAgoIso(150),
         publishedBy: 'Alex Rivera',

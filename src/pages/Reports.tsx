@@ -93,7 +93,7 @@ export function Reports() {
 
 function StatCard({ label, value, sub }: { label: string; value: string; sub?: string }) {
   return (
-    <div className="rounded-xl border border-ink-200 bg-white p-4 shadow-card">
+    <div className="rounded-xl border border-ink-200 bg-card p-4 shadow-card">
       <p className="text-2xl font-bold text-ink-900">{value}</p>
       <p className="text-xs text-ink-500">{label}</p>
       {sub && <p className="mt-1 text-xs text-ink-400">{sub}</p>}

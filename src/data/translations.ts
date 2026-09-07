@@ -37,7 +37,7 @@ export const SEED_TRANSLATIONS: TranslationEntry[] = [
     'pol_opening',
     3,
     'es',
-    '## Propósito\n\nEste procedimiento garantiza que la tienda abra de forma segura, coherente y lista para los clientes cada mañana.\n\n## Pasos\n\n1. Abra la puerta principal y desactive el sistema de alarma en un plazo de 60 segundos.\n2. Encienda toda la iluminación del área de ventas y del almacén.\n3. Inspeccione ambas salidas de emergencia para confirmar que no están obstruidas y que se pueden abrir desde el interior.\n4. Cuente la caja registradora de apertura y compárela con el total de cierre de la noche anterior.\n5. Revise la entrada principal y el vestíbulo para verificar que estén limpios; barra si es necesario.\n6. Revise el registro de mensajes nocturnos dejado por el asociado de cierre.\n7. Complete la tarea "Store Opening Checklist" en TaskCopilot antes de abrir las puertas a los clientes.\n\n## Notas de seguridad\n\n- Nunca deje las salidas de emergencia trabadas o abiertas con algo.\n- Si la alarma no se desactiva en 60 segundos, llame de inmediato a la empresa de monitoreo de alarmas — no entre al área de ventas.\n\n## A quién aplica\n\nCualquier asociado programado como líder de apertura.',
+    '## Propósito\n\nEste procedimiento garantiza que la tienda abra de forma segura, coherente y lista para los clientes cada mañana.\n\n## Pasos\n\n1. Abra la puerta principal y desactive el sistema de alarma en un plazo de 60 segundos.\n2. Encienda toda la iluminación del área de ventas y del almacén.\n3. Inspeccione ambas salidas de emergencia para confirmar que no están obstruidas y que se pueden abrir desde el interior.\n4. Cuente la caja registradora de apertura y compárela con el total de cierre de la noche anterior.\n5. Revise la entrada principal y el vestíbulo para verificar que estén limpios; barra si es necesario.\n6. Revise el registro de mensajes nocturnos dejado por el asociado de cierre.\n7. Complete la tarea "Store Opening Checklist" en Workgrid antes de abrir las puertas a los clientes.\n\n## Notas de seguridad\n\n- Nunca deje las salidas de emergencia trabadas o abiertas con algo.\n- Si la alarma no se desactiva en 60 segundos, llame de inmediato a la empresa de monitoreo de alarmas — no entre al área de ventas.\n\n## A quién aplica\n\nCualquier asociado programado como líder de apertura.',
     'Procedimiento de Apertura de la Tienda',
   ),
   entry(
@@ -45,7 +45,7 @@ export const SEED_TRANSLATIONS: TranslationEntry[] = [
     'pol_opening',
     3,
     'no',
-    '## Formål\n\nDenne rutinen sikrer at butikken åpner trygt, konsekvent og klar for kunder hver morgen.\n\n## Trinn\n\n1. Lås opp hovedinngangen og deaktiver alarmsystemet innen 60 sekunder.\n2. Slå på all belysning i butikklokalet og lageret.\n3. Inspiser begge nødutgangene for å bekrefte at de er fri for hindringer og kan låses opp innenfra.\n4. Tell opptellingskassen mot forrige kvelds sluttsum.\n5. Sjekk hovedinngangen og vindfanget for renslighet; fei ved behov.\n6. Gå gjennom meldingsloggen fra nattevakten som stengte butikken.\n7. Fullfør oppgaven «Store Opening Checklist» i TaskCopilot før kundedørene låses opp.\n\n## Sikkerhetsmerknader\n\n- Ikke sett kubb i nødutgangene.\n- Hvis alarmen ikke deaktiveres innen 60 sekunder, ring alarmselskapet umiddelbart — ikke gå inn i butikklokalet.\n\n## Hvem dette gjelder for\n\nAlle ansatte som er satt opp som åpningsansvarlig.',
+    '## Formål\n\nDenne rutinen sikrer at butikken åpner trygt, konsekvent og klar for kunder hver morgen.\n\n## Trinn\n\n1. Lås opp hovedinngangen og deaktiver alarmsystemet innen 60 sekunder.\n2. Slå på all belysning i butikklokalet og lageret.\n3. Inspiser begge nødutgangene for å bekrefte at de er fri for hindringer og kan låses opp innenfra.\n4. Tell opptellingskassen mot forrige kvelds sluttsum.\n5. Sjekk hovedinngangen og vindfanget for renslighet; fei ved behov.\n6. Gå gjennom meldingsloggen fra nattevakten som stengte butikken.\n7. Fullfør oppgaven «Store Opening Checklist» i Workgrid før kundedørene låses opp.\n\n## Sikkerhetsmerknader\n\n- Ikke sett kubb i nødutgangene.\n- Hvis alarmen ikke deaktiveres innen 60 sekunder, ring alarmselskapet umiddelbart — ikke gå inn i butikklokalet.\n\n## Hvem dette gjelder for\n\nAlle ansatte som er satt opp som åpningsansvarlig.',
     'Rutine for åpning av butikken',
   ),
   entry(
@@ -53,7 +53,7 @@ export const SEED_TRANSLATIONS: TranslationEntry[] = [
     'pol_opening',
     3,
     'pl',
-    '## Cel\n\nTa procedura zapewnia, że sklep otwiera się bezpiecznie, spójnie i jest gotowy na klientów każdego ranka.\n\n## Kroki\n\n1. Odblokuj główne wejście i wyłącz system alarmowy w ciągu 60 sekund.\n2. Włącz całe oświetlenie sali sprzedaży i magazynu.\n3. Sprawdź oba wyjścia awaryjne, aby upewnić się, że nie są zablokowane i można je otworzyć od wewnątrz.\n4. Przelicz kasę otwarciową i porównaj z sumą zamknięcia z poprzedniego wieczoru.\n5. Sprawdź czystość wejścia głównego i przedsionka; zamieć w razie potrzeby.\n6. Przejrzyj dziennik wiadomości nocnych pozostawiony przez pracownika zamykającego.\n7. Wykonaj zadanie "Store Opening Checklist" w TaskCopilot przed otwarciem drzwi dla klientów.\n\n## Uwagi dotyczące bezpieczeństwa\n\n- Nigdy nie blokuj wyjść awaryjnych w pozycji otwartej.\n- Jeśli alarm nie wyłączy się w ciągu 60 sekund, natychmiast zadzwoń do firmy monitorującej alarm — nie wchodź na salę sprzedaży.\n\n## Kogo dotyczy\n\nKażdego pracownika wyznaczonego jako lider otwarcia.',
+    '## Cel\n\nTa procedura zapewnia, że sklep otwiera się bezpiecznie, spójnie i jest gotowy na klientów każdego ranka.\n\n## Kroki\n\n1. Odblokuj główne wejście i wyłącz system alarmowy w ciągu 60 sekund.\n2. Włącz całe oświetlenie sali sprzedaży i magazynu.\n3. Sprawdź oba wyjścia awaryjne, aby upewnić się, że nie są zablokowane i można je otworzyć od wewnątrz.\n4. Przelicz kasę otwarciową i porównaj z sumą zamknięcia z poprzedniego wieczoru.\n5. Sprawdź czystość wejścia głównego i przedsionka; zamieć w razie potrzeby.\n6. Przejrzyj dziennik wiadomości nocnych pozostawiony przez pracownika zamykającego.\n7. Wykonaj zadanie "Store Opening Checklist" w Workgrid przed otwarciem drzwi dla klientów.\n\n## Uwagi dotyczące bezpieczeństwa\n\n- Nigdy nie blokuj wyjść awaryjnych w pozycji otwartej.\n- Jeśli alarm nie wyłączy się w ciągu 60 sekund, natychmiast zadzwoń do firmy monitorującej alarm — nie wchodź na salę sprzedaży.\n\n## Kogo dotyczy\n\nKażdego pracownika wyznaczonego jako lider otwarcia.',
     'Procedura otwarcia sklepu',
   ),
   entry('policy_summary', 'pol_opening', 2, 'es', 'Se agregó la inspección de salidas de emergencia y la revisión del registro de mensajes nocturnos como pasos obligatorios.'),
@@ -67,7 +67,7 @@ export const SEED_TRANSLATIONS: TranslationEntry[] = [
     'pol_closing',
     4,
     'es',
-    '## Propósito\n\nUna rutina de cierre coherente protege la tienda, nuestro efectivo y a nuestro equipo.\n\n## Pasos\n\n1. Anuncie el último aviso 15 minutos antes de la hora de cierre.\n2. Limpie y organice todos los mostradores de caja.\n3. Regrese la mercancía extraviada a los pasillos correctos.\n4. Asegure todas las exhibiciones exteriores y guarde la señalización de temporada.\n5. Verifique que ambas salidas de emergencia estén cerradas con llave.\n6. Haga el cierre de caja de todas las cajas registradoras y prepare el depósito bancario.\n7. **Fotografíe el área de almacenamiento cerrada con llave** y adjúntela a la lista de cierre.\n8. Vacíe todos los contenedores de basura designados.\n9. Cierre con llave todas las entradas y active la alarma.\n10. Complete el recorrido final de la tienda antes de irse.\n11. Envíe la lista de cierre para la aprobación del gerente en TaskCopilot.\n\n## Notas de seguridad\n\n- Nunca se quede solo en el edificio después del anochecer — el cierre debe hacerse en parejas.\n- Si la alarma no se activa, contacte al gerente de guardia antes de irse.',
+    '## Propósito\n\nUna rutina de cierre coherente protege la tienda, nuestro efectivo y a nuestro equipo.\n\n## Pasos\n\n1. Anuncie el último aviso 15 minutos antes de la hora de cierre.\n2. Limpie y organice todos los mostradores de caja.\n3. Regrese la mercancía extraviada a los pasillos correctos.\n4. Asegure todas las exhibiciones exteriores y guarde la señalización de temporada.\n5. Verifique que ambas salidas de emergencia estén cerradas con llave.\n6. Haga el cierre de caja de todas las cajas registradoras y prepare el depósito bancario.\n7. **Fotografíe el área de almacenamiento cerrada con llave** y adjúntela a la lista de cierre.\n8. Vacíe todos los contenedores de basura designados.\n9. Cierre con llave todas las entradas y active la alarma.\n10. Complete el recorrido final de la tienda antes de irse.\n11. Envíe la lista de cierre para la aprobación del gerente en Workgrid.\n\n## Notas de seguridad\n\n- Nunca se quede solo en el edificio después del anochecer — el cierre debe hacerse en parejas.\n- Si la alarma no se activa, contacte al gerente de guardia antes de irse.',
     'Procedimiento de Cierre de la Tienda',
   ),
   entry(
@@ -75,7 +75,7 @@ export const SEED_TRANSLATIONS: TranslationEntry[] = [
     'pol_closing',
     4,
     'no',
-    '## Formål\n\nEn konsekvent stengerutine beskytter butikken, kontantene våre og teamet vårt.\n\n## Trinn\n\n1. Varsle siste runde 15 minutter før stengetid.\n2. Rengjør og rydd alle kassediskene.\n3. Sett tilbake feilplassert vare til riktig hylle.\n4. Sikre alle utendørs displayer og ta inn sesongskilt.\n5. Sjekk at begge nødutgangene er lukket og låst.\n6. Tell opp alle kassaapparater og klargjør bankinnskuddet.\n7. **Ta bilde av det låste lagerrommet** og legg det ved stengesjekklisten.\n8. Tøm alle angitte søppelbeholdere.\n9. Lås alle innganger og aktiver alarmen.\n10. Fullfør den siste runden i butikken før du drar.\n11. Send stengesjekklisten til godkjenning hos leder i TaskCopilot.\n\n## Sikkerhetsmerknader\n\n- Ikke bli igjen alene i bygningen etter mørkets frembrudd — stenging skal gjøres i par.\n- Hvis alarmen ikke lar seg aktivere, kontakt vakthavende leder før du drar.',
+    '## Formål\n\nEn konsekvent stengerutine beskytter butikken, kontantene våre og teamet vårt.\n\n## Trinn\n\n1. Varsle siste runde 15 minutter før stengetid.\n2. Rengjør og rydd alle kassediskene.\n3. Sett tilbake feilplassert vare til riktig hylle.\n4. Sikre alle utendørs displayer og ta inn sesongskilt.\n5. Sjekk at begge nødutgangene er lukket og låst.\n6. Tell opp alle kassaapparater og klargjør bankinnskuddet.\n7. **Ta bilde av det låste lagerrommet** og legg det ved stengesjekklisten.\n8. Tøm alle angitte søppelbeholdere.\n9. Lås alle innganger og aktiver alarmen.\n10. Fullfør den siste runden i butikken før du drar.\n11. Send stengesjekklisten til godkjenning hos leder i Workgrid.\n\n## Sikkerhetsmerknader\n\n- Ikke bli igjen alene i bygningen etter mørkets frembrudd — stenging skal gjøres i par.\n- Hvis alarmen ikke lar seg aktivere, kontakt vakthavende leder før du drar.',
     'Rutine for stenging av butikken',
   ),
   entry(
@@ -83,7 +83,7 @@ export const SEED_TRANSLATIONS: TranslationEntry[] = [
     'pol_closing',
     4,
     'pl',
-    '## Cel\n\nSpójna procedura zamknięcia chroni sklep, naszą gotówkę i nasz zespół.\n\n## Kroki\n\n1. Ogłoś ostatnie wezwanie 15 minut przed zamknięciem.\n2. Posprzątaj i uporządkuj wszystkie lady kasowe.\n3. Odłóż źle ułożony towar na właściwe półki.\n4. Zabezpiecz wszystkie ekspozycje zewnętrzne i schowaj sezonowe oznakowanie.\n5. Sprawdź, czy oba wyjścia awaryjne są zamknięte i zablokowane.\n6. Rozlicz wszystkie kasy i przygotuj depozyt bankowy.\n7. **Sfotografuj zamknięty magazyn** i dołącz zdjęcie do listy zamknięcia.\n8. Opróżnij wszystkie wyznaczone kosze na śmieci.\n9. Zamknij wszystkie wejścia i uzbrój alarm.\n10. Wykonaj końcowy obchód sklepu przed wyjściem.\n11. Wyślij listę zamknięcia do zatwierdzenia przez kierownika w TaskCopilot.\n\n## Uwagi dotyczące bezpieczeństwa\n\n- Nigdy nie zostawaj sam w budynku po zmroku — zamknięcie należy wykonywać w parach.\n- Jeśli alarm nie uzbroi się, skontaktuj się z kierownikiem dyżurnym przed wyjściem.',
+    '## Cel\n\nSpójna procedura zamknięcia chroni sklep, naszą gotówkę i nasz zespół.\n\n## Kroki\n\n1. Ogłoś ostatnie wezwanie 15 minut przed zamknięciem.\n2. Posprzątaj i uporządkuj wszystkie lady kasowe.\n3. Odłóż źle ułożony towar na właściwe półki.\n4. Zabezpiecz wszystkie ekspozycje zewnętrzne i schowaj sezonowe oznakowanie.\n5. Sprawdź, czy oba wyjścia awaryjne są zamknięte i zablokowane.\n6. Rozlicz wszystkie kasy i przygotuj depozyt bankowy.\n7. **Sfotografuj zamknięty magazyn** i dołącz zdjęcie do listy zamknięcia.\n8. Opróżnij wszystkie wyznaczone kosze na śmieci.\n9. Zamknij wszystkie wejścia i uzbrój alarm.\n10. Wykonaj końcowy obchód sklepu przed wyjściem.\n11. Wyślij listę zamknięcia do zatwierdzenia przez kierownika w Workgrid.\n\n## Uwagi dotyczące bezpieczeństwa\n\n- Nigdy nie zostawaj sam w budynku po zmroku — zamknięcie należy wykonywać w parach.\n- Jeśli alarm nie uzbroi się, skontaktuj się z kierownikiem dyżurnym przed wyjściem.',
     'Procedura zamknięcia sklepu',
   ),
   entry(
@@ -164,7 +164,7 @@ export const SEED_TRANSLATIONS: TranslationEntry[] = [
     'hb_hours',
     2,
     'es',
-    'El horario de la tienda es de lunes a sábado de 7:00 a.m. a 7:00 p.m. y domingo de 9:00 a.m. a 5:00 p.m.\n\nLos turnos se publican en TaskCopilot con al menos una semana de anticipación. Por favor, marque su entrada no más de 5 minutos antes de la hora de inicio programada y marque su salida puntualmente al final de su turno.\n\nSi va a llegar tarde, llame directamente a la tienda — no envíe solo un mensaje de texto a un compañero.',
+    'El horario de la tienda es de lunes a sábado de 7:00 a.m. a 7:00 p.m. y domingo de 9:00 a.m. a 5:00 p.m.\n\nLos turnos se publican en Workgrid con al menos una semana de anticipación. Por favor, marque su entrada no más de 5 minutos antes de la hora de inicio programada y marque su salida puntualmente al final de su turno.\n\nSi va a llegar tarde, llame directamente a la tienda — no envíe solo un mensaje de texto a un compañero.',
     'Horario de Trabajo',
   ),
   entry(
@@ -172,7 +172,7 @@ export const SEED_TRANSLATIONS: TranslationEntry[] = [
     'hb_hours',
     2,
     'no',
-    'Butikkens åpningstider er mandag–lørdag 07.00–19.00 og søndag 09.00–17.00.\n\nVaktene legges ut i TaskCopilot minst én uke i forveien. Vennligst stemple inn maks 5 minutter før oppsatt starttid, og stemple ut umiddelbart ved vaktslutt.\n\nHvis du blir forsinket, ring butikken direkte — ikke bare send en tekstmelding til en kollega.',
+    'Butikkens åpningstider er mandag–lørdag 07.00–19.00 og søndag 09.00–17.00.\n\nVaktene legges ut i Workgrid minst én uke i forveien. Vennligst stemple inn maks 5 minutter før oppsatt starttid, og stemple ut umiddelbart ved vaktslutt.\n\nHvis du blir forsinket, ring butikken direkte — ikke bare send en tekstmelding til en kollega.',
     'Arbeidstid',
   ),
   entry(
@@ -180,7 +180,7 @@ export const SEED_TRANSLATIONS: TranslationEntry[] = [
     'hb_hours',
     2,
     'pl',
-    'Godziny otwarcia sklepu to poniedziałek–sobota 7:00–19:00 oraz niedziela 9:00–17:00.\n\nGrafiki są publikowane w TaskCopilot co najmniej tydzień wcześniej. Prosimy o rozpoczynanie pracy nie wcześniej niż 5 minut przed zaplanowaną godziną rozpoczęcia i punktualne kończenie zmiany.\n\nJeśli się spóźniasz, zadzwoń bezpośrednio do sklepu — nie wysyłaj tylko wiadomości tekstowej do współpracownika.',
+    'Godziny otwarcia sklepu to poniedziałek–sobota 7:00–19:00 oraz niedziela 9:00–17:00.\n\nGrafiki są publikowane w Workgrid co najmniej tydzień wcześniej. Prosimy o rozpoczynanie pracy nie wcześniej niż 5 minut przed zaplanowaną godziną rozpoczęcia i punktualne kończenie zmiany.\n\nJeśli się spóźniasz, zadzwoń bezpośrednio do sklepu — nie wysyłaj tylko wiadomości tekstowej do współpracownika.',
     'Godziny Pracy',
   ),
   entry(

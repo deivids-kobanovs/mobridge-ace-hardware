@@ -67,9 +67,9 @@ export function composePolicyUpdateEmail(policy: Policy, employee: Employee, cac
     <p>${titleT.title ?? policy.title} ${lang === policy.originalLanguage ? 'has been updated.' : 'has been updated.'}</p>
     ${summaryT ? `<p><strong>${whatsChanged}</strong><br/>${summaryT.content}</p>` : ''}
     <p>${versionLabel}: ${policy.version}<br/>${updatedLabel}: ${formatDateMedium(policy.publishedAt?.slice(0, 10) ?? policy.updatedAt.slice(0, 10))}</p>
-    <p><a href="#" style="display:inline-block;padding:10px 18px;background:#b3211d;color:#fff;border-radius:8px;text-decoration:none;font-weight:600;">${viewButton}</a></p>
+    <p><a href="#" style="display:inline-block;padding:10px 18px;background:#d9af5b;color:#1a1509;border-radius:8px;text-decoration:none;font-weight:600;">${viewButton}</a></p>
     <p>${closingLine}</p>
-    <p>${COMPANY_NAME}<br/><span style="color:#7d818b;font-size:12px;">via TaskCopilot</span></p>
+    <p>${COMPANY_NAME}<br/><span style="color:#7d818b;font-size:12px;">via Workgrid</span></p>
   `.trim()
 
   return { subject, bodyHtml }

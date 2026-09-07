@@ -1,9 +1,9 @@
 import { Bar, BarChart, CartesianGrid, Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { BLOCKED_REASONS_STATS, DEPARTMENT_COMPLETION, EMPLOYEE_COMPLETION, WEEKLY_STATS } from '@/data/weeklyStats'
 
-const AXIS_TICK = { fill: '#7d818b', fontSize: 12 }
-const GRID = '#e7e8ea'
-const TOOLTIP_STYLE = { borderRadius: 8, border: '1px solid #e7e8ea', fontSize: 12 }
+const AXIS_TICK = { fill: '#9ca6ba', fontSize: 12 }
+const GRID = '#2c3340'
+const TOOLTIP_STYLE = { borderRadius: 8, border: '1px solid #2c3340', background: '#131720', color: '#f5f7fa', fontSize: 12 }
 
 export function OnTimeVsLateChart() {
   return (
@@ -13,10 +13,10 @@ export function OnTimeVsLateChart() {
           <CartesianGrid vertical={false} stroke={GRID} />
           <XAxis dataKey="day" tickLine={false} axisLine={false} tick={AXIS_TICK} />
           <YAxis tickLine={false} axisLine={false} tick={AXIS_TICK} tickFormatter={(v) => `${v}%`} />
-          <Tooltip contentStyle={TOOLTIP_STYLE} cursor={{ fill: '#f6f6f7' }} />
-          <Legend wrapperStyle={{ fontSize: 12 }} />
-          <Bar dataKey="onTime" name="On time" stackId="a" fill="#059669" radius={[0, 0, 0, 0]} maxBarSize={36} />
-          <Bar dataKey="late" name="Late" stackId="a" fill="#f59e0b" radius={[6, 6, 0, 0]} maxBarSize={36} />
+          <Tooltip contentStyle={TOOLTIP_STYLE} cursor={{ fill: '#1f2530' }} />
+          <Legend wrapperStyle={{ fontSize: 12, color: '#9ca6ba' }} />
+          <Bar dataKey="onTime" name="On time" stackId="a" fill="#34d399" radius={[0, 0, 0, 0]} maxBarSize={36} />
+          <Bar dataKey="late" name="Late" stackId="a" fill="#fbbf24" radius={[6, 6, 0, 0]} maxBarSize={36} />
         </BarChart>
       </ResponsiveContainer>
     </div>
@@ -31,8 +31,8 @@ export function DepartmentCompletionChart() {
           <CartesianGrid horizontal={false} stroke={GRID} />
           <XAxis type="number" domain={[0, 100]} tickLine={false} axisLine={false} tick={AXIS_TICK} tickFormatter={(v) => `${v}%`} />
           <YAxis type="category" dataKey="department" tickLine={false} axisLine={false} tick={AXIS_TICK} width={130} />
-          <Tooltip contentStyle={TOOLTIP_STYLE} cursor={{ fill: '#f6f6f7' }} formatter={(v) => [`${v}%`, 'Completion']} />
-          <Bar dataKey="rate" fill="#b3211d" radius={[0, 6, 6, 0]} maxBarSize={20} />
+          <Tooltip contentStyle={TOOLTIP_STYLE} cursor={{ fill: '#1f2530' }} formatter={(v) => [`${v}%`, 'Completion']} />
+          <Bar dataKey="rate" fill="#d9af5b" radius={[0, 6, 6, 0]} maxBarSize={20} />
         </BarChart>
       </ResponsiveContainer>
     </div>
@@ -47,15 +47,15 @@ export function EmployeeCompletionChart() {
           <CartesianGrid vertical={false} stroke={GRID} />
           <XAxis dataKey="name" tickLine={false} axisLine={false} tick={{ ...AXIS_TICK, fontSize: 11 }} interval={0} angle={-15} textAnchor="end" height={50} />
           <YAxis tickLine={false} axisLine={false} tick={AXIS_TICK} domain={[0, 100]} tickFormatter={(v) => `${v}%`} />
-          <Tooltip contentStyle={TOOLTIP_STYLE} cursor={{ fill: '#f6f6f7' }} formatter={(v) => [`${v}%`, 'Completion rate']} />
-          <Bar dataKey="rate" fill="#0284c7" radius={[6, 6, 0, 0]} maxBarSize={36} />
+          <Tooltip contentStyle={TOOLTIP_STYLE} cursor={{ fill: '#1f2530' }} formatter={(v) => [`${v}%`, 'Completion rate']} />
+          <Bar dataKey="rate" fill="#38bdf8" radius={[6, 6, 0, 0]} maxBarSize={36} />
         </BarChart>
       </ResponsiveContainer>
     </div>
   )
 }
 
-const PIE_COLORS = ['#b3211d', '#e2705f', '#f59e0b', '#0284c7', '#7c3aed', '#4b4e57']
+const PIE_COLORS = ['#d9af5b', '#fb7185', '#fbbf24', '#38bdf8', '#a78bfa', '#9ca6ba']
 
 export function BlockedReasonsChart() {
   return (
@@ -67,7 +67,7 @@ export function BlockedReasonsChart() {
               <Cell key={entry.reason} fill={PIE_COLORS[i % PIE_COLORS.length]} />
             ))}
           </Pie>
-          <Legend layout="vertical" align="right" verticalAlign="middle" wrapperStyle={{ fontSize: 11 }} />
+          <Legend layout="vertical" align="right" verticalAlign="middle" wrapperStyle={{ fontSize: 11, color: '#9ca6ba' }} />
           <Tooltip contentStyle={TOOLTIP_STYLE} />
         </PieChart>
       </ResponsiveContainer>
