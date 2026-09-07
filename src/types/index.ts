@@ -203,6 +203,47 @@ export interface Task {
 
 export type ShiftStatus = 'On Shift' | 'On Break' | 'Off Shift'
 
+export type LanguageCode =
+  | 'en'
+  | 'no'
+  | 'pl'
+  | 'lv'
+  | 'lt'
+  | 'uk'
+  | 'ro'
+  | 'es'
+  | 'de'
+  | 'sv'
+  | 'da'
+  | 'fi'
+  | 'fr'
+  | 'pt'
+  | 'ar'
+
+export interface LanguageOption {
+  code: LanguageCode
+  label: string
+  nativeLabel: string
+}
+
+export const LANGUAGES: LanguageOption[] = [
+  { code: 'en', label: 'English', nativeLabel: 'English' },
+  { code: 'no', label: 'Norwegian', nativeLabel: 'Norsk' },
+  { code: 'pl', label: 'Polish', nativeLabel: 'Polski' },
+  { code: 'lv', label: 'Latvian', nativeLabel: 'Latviešu' },
+  { code: 'lt', label: 'Lithuanian', nativeLabel: 'Lietuvių' },
+  { code: 'uk', label: 'Ukrainian', nativeLabel: 'Українська' },
+  { code: 'ro', label: 'Romanian', nativeLabel: 'Română' },
+  { code: 'es', label: 'Spanish', nativeLabel: 'Español' },
+  { code: 'de', label: 'German', nativeLabel: 'Deutsch' },
+  { code: 'sv', label: 'Swedish', nativeLabel: 'Svenska' },
+  { code: 'da', label: 'Danish', nativeLabel: 'Dansk' },
+  { code: 'fi', label: 'Finnish', nativeLabel: 'Suomi' },
+  { code: 'fr', label: 'French', nativeLabel: 'Français' },
+  { code: 'pt', label: 'Portuguese', nativeLabel: 'Português' },
+  { code: 'ar', label: 'Arabic', nativeLabel: 'العربية' },
+]
+
 export interface Employee {
   id: string
   name: string
@@ -213,6 +254,9 @@ export interface Employee {
   initials: string
   color: string
   isManager?: boolean
+  email: string
+  preferredLanguage: LanguageCode
+  interfaceLanguage?: LanguageCode
 }
 
 export interface TemplateChecklistStep {
@@ -274,4 +318,157 @@ export interface Announcement {
   timestamp: string
   author: string
   message: string
+}
+
+// ---------------------------------------------------------------------------
+// Policies & Procedures
+// ---------------------------------------------------------------------------
+
+export type PolicyCategoryId =
+  | 'general'
+  | 'opening'
+  | 'closing'
+  | 'customer_service'
+  | 'safety'
+  | 'cleaning'
+  | 'equipment'
+  | 'cash_handling'
+  | 'inventory'
+  | 'emergency'
+  | 'maintenance'
+  | 'other'
+
+export interface PolicyCategory {
+  id: PolicyCategoryId | string
+  companyId: string
+  name: string
+  sortOrder: number
+  builtIn?: boolean
+}
+
+export type PolicyStatus = 'Draft' | 'Published'
+
+export interface PolicyVersion {
+  policyId: string
+  version: number
+  title: string
+  description: string
+  content: string
+  summaryOfChanges?: string
+  originalLanguage: LanguageCode
+  publishedAt: string
+  publishedBy: string
+}
+
+export interface Policy {
+  id: string
+  companyId: string
+  locationId?: string
+  title: string
+  description: string
+  categoryId: PolicyCategoryId | string
+  content: string
+  originalLanguage: LanguageCode
+  status: PolicyStatus
+  version: number
+  createdAt: string
+  updatedAt: string
+  createdBy: string
+  updatedBy: string
+  publishedAt?: string
+  requiresAcknowledgement: boolean
+  archived?: boolean
+  versions: PolicyVersion[]
+  draftTitle?: string
+  draftDescription?: string
+  draftContent?: string
+  draftCategoryId?: PolicyCategoryId | string
+}
+
+export interface PolicyAcknowledgement {
+  id: string
+  companyId: string
+  policyId: string
+  policyVersion: number
+  employeeId: string
+  acknowledgedAt: string
+}
+
+// ---------------------------------------------------------------------------
+// Handbook
+// ---------------------------------------------------------------------------
+
+export type HandbookSectionStatus = 'Draft' | 'Published'
+
+export interface HandbookSection {
+  id: string
+  handbookId: string
+  title: string
+  content: string
+  sortOrder: number
+  status: HandbookSectionStatus
+  requiresAcknowledgement: boolean
+  version: number
+  updatedAt: string
+  updatedBy: string
+  draftTitle?: string
+  draftContent?: string
+}
+
+export interface Handbook {
+  companyId: string
+  version: number
+  originalLanguage: LanguageCode
+  publishedAt: string
+  updatedAt: string
+  requiresFullAcknowledgement: boolean
+  sections: HandbookSection[]
+}
+
+export interface HandbookAcknowledgement {
+  id: string
+  companyId: string
+  handbookVersion: number
+  employeeId: string
+  acknowledgedAt: string
+}
+
+export interface HandbookSectionAcknowledgement {
+  id: string
+  companyId: string
+  sectionId: string
+  sectionVersion: number
+  employeeId: string
+  acknowledgedAt: string
+}
+
+// ---------------------------------------------------------------------------
+// Multilingual AI translation
+// ---------------------------------------------------------------------------
+
+export type TranslationSourceType = 'policy' | 'policy_summary' | 'handbook_section' | 'task' | 'notification'
+
+export interface TranslationEntry {
+  id: string
+  companyId: string
+  sourceType: TranslationSourceType
+  sourceId: string
+  sourceVersion: number
+  sourceLanguage: LanguageCode
+  targetLanguage: LanguageCode
+  translatedTitle?: string
+  translatedContent: string
+  createdAt: string
+}
+
+export interface SimulatedEmail {
+  id: string
+  to: string
+  toEmployeeId: string
+  language: LanguageCode
+  subject: string
+  bodyHtml: string
+  sentAt: string
+  relatedType: 'policy' | 'handbook'
+  relatedId: string
 }

@@ -6,8 +6,10 @@ import { TaskDetailPanel } from '@/components/tasks/TaskDetailPanel'
 import type { ManagerPage } from '@/lib/navigation'
 import { AllTasks } from '@/pages/AllTasks'
 import { Employees } from '@/pages/Employees'
+import { HandbookPage } from '@/pages/Handbook'
 import { NotificationsPage } from '@/pages/Notifications'
 import { Overview } from '@/pages/Overview'
+import { Policies } from '@/pages/Policies'
 import { RecurringTasks } from '@/pages/RecurringTasks'
 import { Reports } from '@/pages/Reports'
 import { Settings } from '@/pages/Settings'
@@ -19,9 +21,15 @@ export function ManagerShell() {
   const [searchQuery, setSearchQuery] = useState('')
   const [createOpen, setCreateOpen] = useState(false)
   const [openTaskId, setOpenTaskId] = useState<string | null>(null)
+  const [policyDeepLinkId, setPolicyDeepLinkId] = useState<string | null>(null)
 
   function goToTasksAndSearch() {
     setPage('tasks')
+  }
+
+  function goToPolicy(policyId?: string) {
+    setPolicyDeepLinkId(policyId ?? null)
+    setPage('policies')
   }
 
   return (
@@ -39,10 +47,12 @@ export function ManagerShell() {
           onOpenTask={setOpenTaskId}
         />
         <main className="flex-1 px-4 py-6 lg:px-8">
-          {page === 'overview' && <Overview onOpenTask={setOpenTaskId} onViewAllTasks={() => setPage('tasks')} />}
+          {page === 'overview' && <Overview onOpenTask={setOpenTaskId} onViewAllTasks={() => setPage('tasks')} onViewPolicy={goToPolicy} />}
           {page === 'tasks' && <AllTasks searchQuery={searchQuery} onOpenTask={setOpenTaskId} />}
           {page === 'recurring' && <RecurringTasks onOpenTask={setOpenTaskId} />}
           {page === 'templates' && <Templates />}
+          {page === 'policies' && <Policies key={policyDeepLinkId ?? 'list'} initialPolicyId={policyDeepLinkId} />}
+          {page === 'handbook' && <HandbookPage />}
           {page === 'employees' && <Employees onOpenTask={setOpenTaskId} />}
           {page === 'reports' && <Reports />}
           {page === 'notifications' && <NotificationsPage onOpenTask={setOpenTaskId} />}

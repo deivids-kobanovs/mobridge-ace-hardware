@@ -1,16 +1,19 @@
 import {
   BarChart3,
   Bell,
+  BookOpen,
   CalendarClock,
   ClipboardList,
   LayoutGrid,
   ListChecks,
+  ShieldCheck,
   Settings,
   Users,
   Wrench,
   X,
 } from 'lucide-react'
 import type { ComponentType } from 'react'
+import { COMPANY_NAME } from '@/data/employees'
 import { MANAGER_NAV, type ManagerPage } from '@/lib/navigation'
 import { cn } from '@/lib/utils'
 import { useApp } from '@/store/AppContext'
@@ -20,6 +23,8 @@ const ICONS: Record<ManagerPage, ComponentType<{ className?: string }>> = {
   tasks: ListChecks,
   recurring: CalendarClock,
   templates: ClipboardList,
+  policies: ShieldCheck,
+  handbook: BookOpen,
   employees: Users,
   reports: BarChart3,
   notifications: Bell,
@@ -47,8 +52,8 @@ export function Sidebar({
           <Wrench className="size-5" />
         </span>
         <div className="min-w-0 leading-tight">
-          <p className="truncate text-sm font-bold tracking-tight text-ink-900">Mobridge Ace Hardware</p>
-          <p className="text-xs text-ink-500">Task Manager</p>
+          <p className="truncate text-sm font-bold tracking-tight text-ink-900">TaskCopilot</p>
+          <p className="truncate text-xs text-ink-500">{COMPANY_NAME}</p>
         </div>
         <button
           onClick={onCloseMobile}

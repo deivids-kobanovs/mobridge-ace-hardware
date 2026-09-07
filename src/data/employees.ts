@@ -1,5 +1,10 @@
 import type { Employee } from '@/types'
 
+export const COMPANY_ID = 'mobridge_ace_hardware'
+export const LOCATION_ID = 'main_store'
+export const COMPANY_NAME = 'Mobridge Ace Hardware'
+export const COMPANY_DOMAIN = 'mobridgeacehardware.com'
+
 export const MANAGER: Employee = {
   id: 'mgr_alex',
   name: 'Alex Rivera',
@@ -10,6 +15,8 @@ export const MANAGER: Employee = {
   initials: 'AR',
   color: 'bg-brand-600',
   isManager: true,
+  email: 'alex.rivera@mobridgeacehardware.com',
+  preferredLanguage: 'en',
 }
 
 export const ASSISTANT_MANAGER: Employee = {
@@ -22,6 +29,8 @@ export const ASSISTANT_MANAGER: Employee = {
   initials: 'DW',
   color: 'bg-ink-700',
   isManager: true,
+  email: 'dana.whitfield@mobridgeacehardware.com',
+  preferredLanguage: 'en',
 }
 
 export const EMPLOYEES: Employee[] = [
@@ -34,6 +43,8 @@ export const EMPLOYEES: Employee[] = [
     shiftStatus: 'On Shift',
     initials: 'SM',
     color: 'bg-rose-500',
+    email: 'sarah.miller@mobridgeacehardware.com',
+    preferredLanguage: 'en',
   },
   {
     id: 'emp_mike',
@@ -44,6 +55,8 @@ export const EMPLOYEES: Employee[] = [
     shiftStatus: 'On Shift',
     initials: 'MJ',
     color: 'bg-amber-600',
+    email: 'mike.johnson@mobridgeacehardware.com',
+    preferredLanguage: 'es',
   },
   {
     id: 'emp_jordan',
@@ -54,6 +67,8 @@ export const EMPLOYEES: Employee[] = [
     shiftStatus: 'On Shift',
     initials: 'JL',
     color: 'bg-sky-600',
+    email: 'jordan.lee@mobridgeacehardware.com',
+    preferredLanguage: 'no',
   },
   {
     id: 'emp_emily',
@@ -64,6 +79,8 @@ export const EMPLOYEES: Employee[] = [
     shiftStatus: 'On Break',
     initials: 'ED',
     color: 'bg-emerald-600',
+    email: 'emily.davis@mobridgeacehardware.com',
+    preferredLanguage: 'pl',
   },
   {
     id: 'emp_carlos',
@@ -74,6 +91,8 @@ export const EMPLOYEES: Employee[] = [
     shiftStatus: 'On Shift',
     initials: 'CN',
     color: 'bg-violet-600',
+    email: 'carlos.nunez@mobridgeacehardware.com',
+    preferredLanguage: 'es',
   },
   {
     id: 'emp_priya',
@@ -84,6 +103,8 @@ export const EMPLOYEES: Employee[] = [
     shiftStatus: 'Off Shift',
     initials: 'PP',
     color: 'bg-teal-600',
+    email: 'priya.patel@mobridgeacehardware.com',
+    preferredLanguage: 'ro',
   },
 ]
 

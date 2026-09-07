@@ -24,6 +24,7 @@ import { CompleteTaskDialog } from '@/components/tasks/CompleteTaskDialog'
 import { PromptDialog } from '@/components/tasks/PromptDialog'
 import { ReassignDialog } from '@/components/tasks/ReassignDialog'
 import { RescheduleDialog } from '@/components/tasks/RescheduleDialog'
+import { TranslationNotice } from '@/components/content/TranslationNotice'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Dialog, SidePanel } from '@/components/ui/dialog'
@@ -31,16 +32,18 @@ import { Separator } from '@/components/ui/separator'
 import { findEmployee } from '@/data/employees'
 import { formatDateMedium, formatDuration, formatTime12, formatTimestamp } from '@/lib/date'
 import { assignmentLabel, checklistProgress, effectiveStatus, isAssignedTo, recurrenceSummary } from '@/lib/task-helpers'
+import { resolveTranslation } from '@/lib/translate'
 import { cn } from '@/lib/utils'
 import { useApp } from '@/store/AppContext'
 import type { Assignment } from '@/types'
 
 export function TaskDetailPanel({ taskId, onClose }: { taskId: string | null; onClose: () => void }) {
   const app = useApp()
-  const { role, currentEmployeeId, tasks, now } = app
+  const { role, currentEmployeeId, tasks, now, translations, getEmployeeLanguage } = app
   const task = tasks.find((t) => t.id === taskId) ?? null
 
   const [blockOpen, setBlockOpen] = useState(false)
+  const [showOriginalTask, setShowOriginalTask] = useState(false)
   const [reassignOpen, setReassignOpen] = useState(false)
   const [rescheduleOpen, setRescheduleOpen] = useState(false)
   const [returnOpen, setReturnOpen] = useState(false)
@@ -56,6 +59,19 @@ export function TaskDetailPanel({ taskId, onClose }: { taskId: string | null; on
   const status = effectiveStatus(task, now)
   const progress = checklistProgress(task)
   const isEmployeeView = role === 'employee'
+  const employeeLang = isEmployeeView ? getEmployeeLanguage(currentEmployeeId) : 'en'
+  const taskTranslation = resolveTranslation({
+    cache: translations,
+    type: 'task',
+    id: task.id,
+    version: 1,
+    sourceLanguage: 'en',
+    sourceTitle: task.title,
+    sourceContent: task.description,
+    targetLanguage: employeeLang,
+  })
+  const displayTitle = isEmployeeView && !showOriginalTask ? (taskTranslation.title ?? task.title) : task.title
+  const displayDescription = isEmployeeView && !showOriginalTask ? taskTranslation.content : task.description
   const assignedToMe = isEmployeeView && isAssignedTo(task, currentEmployeeId)
   const canAct = assignedToMe && ['Not Started', 'In Progress', 'Returned for Correction'].includes(task.status)
   const canSubmitFinish = canAct && task.status !== 'Not Started' && (progress.total === 0 || progress.done === progress.total)
@@ -66,7 +82,7 @@ export function TaskDetailPanel({ taskId, onClose }: { taskId: string | null; on
     <>
       <Dialog open={!!taskId} onOpenChange={(v) => !v && onClose()}>
         {!!taskId && (
-          <SidePanel title={task.title} description={`${task.department} · ${formatDateMedium(task.dueDate)} at ${formatTime12(task.dueTime)}`} width="xl">
+          <SidePanel title={displayTitle} description={`${task.department} · ${formatDateMedium(task.dueDate)} at ${formatTime12(task.dueTime)}`} width="xl">
             <div className="space-y-6 pb-24">
               <div className="flex flex-wrap items-center gap-2">
                 <StatusBadge status={status} />
@@ -82,7 +98,18 @@ export function TaskDetailPanel({ taskId, onClose }: { taskId: string | null; on
                 )}
               </div>
 
-              {task.description && <p className="text-sm leading-relaxed text-ink-700">{task.description}</p>}
+              {isEmployeeView && taskTranslation.isTranslated && (
+                <TranslationNotice
+                  sourceLanguage="en"
+                  targetLanguage={employeeLang}
+                  isTranslated={taskTranslation.isTranslated}
+                  isAvailable={taskTranslation.isAvailable}
+                  showingOriginal={showOriginalTask}
+                  onToggle={() => setShowOriginalTask((v) => !v)}
+                />
+              )}
+
+              {displayDescription && <p className="text-sm leading-relaxed text-ink-700">{displayDescription}</p>}
 
               <dl className="grid grid-cols-2 gap-4 rounded-xl border border-ink-200 bg-ink-50 p-4 text-sm sm:grid-cols-3">
                 <InfoItem icon={Building2} label="Department" value={task.department} />

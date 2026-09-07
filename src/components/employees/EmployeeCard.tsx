@@ -1,10 +1,13 @@
+import { Globe } from 'lucide-react'
 import { Avatar } from '@/components/ui/avatar'
 import { Progress } from '@/components/ui/progress'
+import { languageLabel } from '@/lib/translate'
 import { cn } from '@/lib/utils'
-import type { Employee } from '@/types'
+import type { Employee, LanguageCode } from '@/types'
 
 export function EmployeeCard({
   employee,
+  language,
   assignedToday,
   completedToday,
   remainingToday,
@@ -13,6 +16,7 @@ export function EmployeeCard({
   onOpen,
 }: {
   employee: Employee
+  language: LanguageCode
   assignedToday: number
   completedToday: number
   remainingToday: number
@@ -31,6 +35,10 @@ export function EmployeeCard({
           <p className="truncate text-sm font-semibold text-ink-900">{employee.name}</p>
           <p className="truncate text-xs text-ink-500">
             {employee.role} · {employee.department}
+          </p>
+          <p className="mt-0.5 flex items-center gap-1 text-[11px] text-ink-400">
+            <Globe className="size-3" />
+            {languageLabel(language)}
           </p>
         </div>
         <span

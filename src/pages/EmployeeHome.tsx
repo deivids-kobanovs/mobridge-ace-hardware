@@ -1,15 +1,25 @@
-import { Megaphone } from 'lucide-react'
+import { BookOpen, CheckCircle2, ChevronRight, Megaphone, ShieldCheck } from 'lucide-react'
 import { useState } from 'react'
 import { TaskListItem } from '@/components/tasks/TaskListItem'
+import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
 import { findEmployee } from '@/data/employees'
 import { timeAgo, todayISO } from '@/lib/date'
+import { hasAcknowledgedHandbook, hasAcknowledgedPolicy } from '@/lib/policy-helpers'
 import { isAssignedTo } from '@/lib/task-helpers'
 import { useApp } from '@/store/AppContext'
 import type { Task } from '@/types'
 
-export function EmployeeHome({ onOpenTask }: { onOpenTask: (id: string) => void }) {
-  const { tasks, now, currentEmployeeId, announcements } = useApp()
+export function EmployeeHome({
+  onOpenTask,
+  onGoToPolicies,
+  onGoToHandbook,
+}: {
+  onOpenTask: (id: string) => void
+  onGoToPolicies: (policyId?: string) => void
+  onGoToHandbook: () => void
+}) {
+  const { tasks, now, currentEmployeeId, announcements, policies, policyAcknowledgements, handbook, handbookAcknowledgements } = useApp()
   const employee = findEmployee(currentEmployeeId)
   const today = todayISO()
 
@@ -27,8 +37,14 @@ export function EmployeeHome({ onOpenTask }: { onOpenTask: (id: string) => void 
   const hour = new Date().getHours()
   const greeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening'
 
+  const pendingPolicies = policies.filter(
+    (p) => p.status === 'Published' && !p.archived && p.requiresAcknowledgement && !hasAcknowledgedPolicy(p, currentEmployeeId, policyAcknowledgements),
+  )
+  const handbookPending = handbook.requiresFullAcknowledgement && !hasAcknowledgedHandbook(handbook.version, currentEmployeeId, handbookAcknowledgements)
+  const requiredReadingCount = pendingPolicies.length + (handbookPending ? 1 : 0)
+
   return (
-    <div className="mx-auto max-w-2xl space-y-6 pb-10">
+    <div className="space-y-6 pb-10">
       <div>
         <h1 className="text-xl font-bold text-ink-900">
           {greeting}, {employee?.name.split(' ')[0]}
@@ -47,6 +63,60 @@ export function EmployeeHome({ onOpenTask }: { onOpenTask: (id: string) => void 
         <p className="mt-1.5 text-xs text-ink-500">
           {completedToday} of {todayTasks.length} tasks completed today
         </p>
+      </div>
+
+      {requiredReadingCount > 0 ? (
+        <div className="space-y-3 rounded-xl border border-amber-200 bg-amber-50 p-4">
+          <p className="text-sm font-semibold text-amber-900">
+            {requiredReadingCount} update{requiredReadingCount === 1 ? '' : 's'} require{requiredReadingCount === 1 ? 's' : ''} your acknowledgement
+          </p>
+          <ul className="space-y-1.5">
+            {pendingPolicies.map((p) => (
+              <li key={p.id}>
+                <button onClick={() => onGoToPolicies(p.id)} className="flex w-full items-center justify-between gap-2 text-left text-sm text-amber-900 hover:underline">
+                  {p.title}
+                  <ChevronRight className="size-3.5 shrink-0" />
+                </button>
+              </li>
+            ))}
+            {handbookPending && (
+              <li>
+                <button onClick={onGoToHandbook} className="flex w-full items-center justify-between gap-2 text-left text-sm text-amber-900 hover:underline">
+                  Employee Handbook
+                  <ChevronRight className="size-3.5 shrink-0" />
+                </button>
+              </li>
+            )}
+          </ul>
+          <Button size="sm" onClick={() => onGoToPolicies(pendingPolicies[0]?.id)}>
+            Review Updates
+          </Button>
+        </div>
+      ) : (
+        <div className="flex items-center gap-2 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-medium text-emerald-800">
+          <CheckCircle2 className="size-4" />
+          You&apos;re up to date on required reading.
+        </div>
+      )}
+
+      <div className="rounded-xl border border-ink-200 bg-white p-4 shadow-card">
+        <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-ink-400">Company Resources</p>
+        <div className="grid grid-cols-2 gap-2">
+          <button
+            onClick={() => onGoToPolicies()}
+            className="flex flex-col items-start gap-2 rounded-lg border border-ink-100 p-3 text-left hover:bg-ink-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
+          >
+            <ShieldCheck className="size-4 text-brand-600" />
+            <span className="text-sm font-semibold text-ink-800">Policies & Procedures</span>
+          </button>
+          <button
+            onClick={onGoToHandbook}
+            className="flex flex-col items-start gap-2 rounded-lg border border-ink-100 p-3 text-left hover:bg-ink-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
+          >
+            <BookOpen className="size-4 text-brand-600" />
+            <span className="text-sm font-semibold text-ink-800">Handbook</span>
+          </button>
+        </div>
       </div>
 
       {announcements.length > 0 && (

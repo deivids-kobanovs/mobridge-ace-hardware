@@ -1,4 +1,4 @@
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, ShieldCheck } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { DailyProgress } from '@/components/dashboard/DailyProgress'
@@ -6,11 +6,20 @@ import { SummaryCards } from '@/components/dashboard/SummaryCards'
 import { WeeklyCompletionChart } from '@/components/dashboard/WeeklyCompletionChart'
 import { TaskListItem } from '@/components/tasks/TaskListItem'
 import { todayISO } from '@/lib/date'
+import { policiesUpdatedWithinDays, policyAckStats } from '@/lib/policy-helpers'
 import { computeSummary } from '@/lib/task-helpers'
 import { useApp } from '@/store/AppContext'
 
-export function Overview({ onOpenTask, onViewAllTasks }: { onOpenTask: (id: string) => void; onViewAllTasks: () => void }) {
-  const { tasks, now } = useApp()
+export function Overview({
+  onOpenTask,
+  onViewAllTasks,
+  onViewPolicy,
+}: {
+  onOpenTask: (id: string) => void
+  onViewAllTasks: () => void
+  onViewPolicy: (policyId?: string) => void
+}) {
+  const { tasks, now, policies, policyAcknowledgements } = useApp()
   const today = todayISO()
   const summary = computeSummary(tasks, today, now)
 
@@ -19,6 +28,12 @@ export function Overview({ onOpenTask, onViewAllTasks }: { onOpenTask: (id: stri
     .sort((a, b) => a.dueTime.localeCompare(b.dueTime))
 
   const needsAttention = tasks.filter((t) => t.status === 'Blocked' || t.status === 'Awaiting Approval').slice(0, 4)
+
+  const trackedPolicies = policies.filter((p) => p.status === 'Published' && !p.archived && p.requiresAcknowledgement)
+  const policyStats = trackedPolicies.map((p) => policyAckStats(p, policyAcknowledgements))
+  const avgAckRate = policyStats.length ? Math.round(policyStats.reduce((sum, s) => sum + s.percent, 0) / policyStats.length) : 100
+  const totalPending = policyStats.reduce((sum, s) => sum + s.pendingIds.length, 0)
+  const updatedThisMonth = policiesUpdatedWithinDays(policies, 30).length
 
   return (
     <div className="space-y-6">
@@ -57,6 +72,35 @@ export function Overview({ onOpenTask, onViewAllTasks }: { onOpenTask: (id: stri
           </CardContent>
         </Card>
       </div>
+
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <ShieldCheck className="size-4 text-brand-600" />
+            Policies
+          </CardTitle>
+          <Button variant="ghost" size="sm" onClick={() => onViewPolicy()}>
+            View Policies
+            <ArrowRight className="size-4" />
+          </Button>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+            <div>
+              <p className="text-2xl font-bold text-ink-900">{updatedThisMonth}</p>
+              <p className="text-xs text-ink-500">policies updated this month</p>
+            </div>
+            <div>
+              <p className="text-2xl font-bold text-ink-900">{avgAckRate}%</p>
+              <p className="text-xs text-ink-500">average acknowledgement rate</p>
+            </div>
+            <div>
+              <p className={`text-2xl font-bold ${totalPending > 0 ? 'text-amber-600' : 'text-emerald-600'}`}>{totalPending}</p>
+              <p className="text-xs text-ink-500">employee acknowledgements pending</p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
       <div>
         <div className="mb-3 flex items-center justify-between">

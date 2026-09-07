@@ -504,4 +504,32 @@ export const SEED_TASKS: Task[] = [
       act('cancelled', 'Alex Rivera', 'Cancelled: Customer service desk closed for remodel this week.', 60 * 30),
     ],
   }),
+
+  base({
+    id: 'task_translate_demo_1',
+    title: 'Clear storage area before 4 PM',
+    description: 'Clean the storage area and ensure all emergency exits are clear before 4:00 PM.',
+    department: 'Receiving',
+    priority: 'Normal',
+    status: 'Not Started',
+    dueDate: today,
+    dueTime: '16:00',
+    estimatedDurationMinutes: 20,
+    assignment: assign(['emp_mike']),
+    activity: [act('created', 'Alex Rivera', 'Task created and assigned to Mike Johnson.', 40)],
+  }),
+
+  base({
+    id: 'task_translate_demo_2',
+    title: 'Wipe down paint mixing station',
+    description: 'Wipe down the paint mixing station and dispose of empty cans before your shift ends.',
+    department: 'Paint',
+    priority: 'Low',
+    status: 'Not Started',
+    dueDate: today,
+    dueTime: '17:00',
+    estimatedDurationMinutes: 15,
+    assignment: assign(['emp_jordan']),
+    activity: [act('created', 'Alex Rivera', 'Task created and assigned to Jordan Lee.', 35)],
+  }),
 ]

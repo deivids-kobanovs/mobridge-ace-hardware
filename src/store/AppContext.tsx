@@ -2,11 +2,19 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useRef, use
 import { toast } from 'sonner'
 import { makeId } from '@/lib/id'
 import { effectiveStatus, isOverdue } from '@/lib/task-helpers'
-import { findEmployee, MANAGER } from '@/data/employees'
+import { COMPANY_ID, EMPLOYEES, findEmployee, LOCATION_ID, MANAGER } from '@/data/employees'
 import { SEED_TASKS } from '@/data/tasks'
 import { TEMPLATES } from '@/data/templates'
 import { buildSeedNotifications } from '@/data/notifications'
 import { SEED_ANNOUNCEMENTS } from '@/data/announcements'
+import { SEED_POLICIES } from '@/data/policies'
+import { POLICY_CATEGORIES } from '@/data/policyCategories'
+import { SEED_POLICY_ACKNOWLEDGEMENTS } from '@/data/policyAcknowledgements'
+import { SEED_HANDBOOK } from '@/data/handbook'
+import { SEED_HANDBOOK_ACKNOWLEDGEMENTS } from '@/data/handbookAcknowledgements'
+import { SEED_TRANSLATIONS } from '@/data/translations'
+import { composePolicyUpdateEmail } from '@/lib/email'
+import { t as ti18n } from '@/lib/i18nStrings'
 import type {
   ActivityType,
   Announcement,
@@ -14,14 +22,25 @@ import type {
   Assignment,
   BlockReasonCategory,
   ChecklistItem,
+  Handbook,
+  HandbookAcknowledgement,
+  HandbookSection,
+  HandbookSectionAcknowledgement,
+  LanguageCode,
+  Policy,
+  PolicyAcknowledgement,
+  PolicyCategory,
+  PolicyCategoryId,
   Priority,
   ReminderConfig,
   Role,
+  SimulatedEmail,
   Task,
   TaskTemplate,
+  TranslationEntry,
 } from '@/types'
 
-const STORAGE_KEY = 'mah_state_v2'
+const STORAGE_KEY = 'mah_state_v3'
 
 interface PersistedState {
   tasks: Task[]
@@ -30,6 +49,15 @@ interface PersistedState {
   announcements: Announcement[]
   role: Role
   currentEmployeeId: string
+  policies: Policy[]
+  policyCategories: PolicyCategory[]
+  policyAcknowledgements: PolicyAcknowledgement[]
+  handbook: Handbook
+  handbookAcknowledgements: HandbookAcknowledgement[]
+  handbookSectionAcknowledgements: HandbookSectionAcknowledgement[]
+  translations: TranslationEntry[]
+  emailLog: SimulatedEmail[]
+  employeeLanguageOverrides: Record<string, LanguageCode>
 }
 
 function loadInitialState(): PersistedState {
@@ -50,6 +78,15 @@ function loadInitialState(): PersistedState {
     announcements: SEED_ANNOUNCEMENTS,
     role: 'manager',
     currentEmployeeId: 'emp_sarah',
+    policies: SEED_POLICIES,
+    policyCategories: POLICY_CATEGORIES,
+    policyAcknowledgements: SEED_POLICY_ACKNOWLEDGEMENTS,
+    handbook: SEED_HANDBOOK,
+    handbookAcknowledgements: SEED_HANDBOOK_ACKNOWLEDGEMENTS,
+    handbookSectionAcknowledgements: [],
+    translations: SEED_TRANSLATIONS,
+    emailLog: [],
+    employeeLanguageOverrides: {},
   }
 }
 
@@ -110,6 +147,39 @@ interface AppContextValue {
   updateTemplate: (id: string, patch: Partial<TaskTemplate>) => void
   duplicateTemplate: (id: string) => void
   assignTemplate: (templateId: string, opts: { assignment: Assignment; dueDate: string; dueTime: string }) => void
+
+  // ---- Multilingual ----
+  translations: TranslationEntry[]
+  getEmployeeLanguage: (employeeId: string) => LanguageCode
+  setEmployeeLanguage: (employeeId: string, lang: LanguageCode) => void
+  emailLog: SimulatedEmail[]
+
+  // ---- Policies & Procedures ----
+  policies: Policy[]
+  policyCategories: PolicyCategory[]
+  policyAcknowledgements: PolicyAcknowledgement[]
+  createPolicy: (input: { title: string; description: string; categoryId: PolicyCategoryId | string; content: string; requiresAcknowledgement: boolean }) => Policy
+  updatePolicyDraft: (id: string, patch: { title?: string; description?: string; categoryId?: PolicyCategoryId | string; content?: string; requiresAcknowledgement?: boolean }) => void
+  publishPolicy: (id: string, opts: { summaryOfChanges?: string; notify: boolean }) => void
+  archivePolicy: (id: string, archived: boolean) => void
+  createPolicyCategory: (name: string) => void
+  renamePolicyCategory: (id: string, name: string) => void
+  deletePolicyCategory: (id: string) => void
+  acknowledgePolicy: (policyId: string) => void
+  remindPendingPolicyEmployees: (policyId: string, timing: 'now' | '24h' | '3d' | 'custom') => void
+
+  // ---- Handbook ----
+  handbook: Handbook
+  handbookAcknowledgements: HandbookAcknowledgement[]
+  handbookSectionAcknowledgements: HandbookSectionAcknowledgement[]
+  updateHandbookSectionDraft: (sectionId: string, patch: { title?: string; content?: string; requiresAcknowledgement?: boolean }) => void
+  publishHandbookSection: (sectionId: string) => void
+  addHandbookSection: (title: string) => void
+  deleteHandbookSection: (sectionId: string) => void
+  reorderHandbookSections: (orderedIds: string[]) => void
+  acknowledgeHandbook: () => void
+  acknowledgeHandbookSection: (sectionId: string) => void
+  remindPendingHandbookAck: (timing: 'now' | '24h' | '3d' | 'custom') => void
 }
 
 const AppContext = createContext<AppContextValue | null>(null)
@@ -124,14 +194,58 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const [announcements, setAnnouncements] = useState<Announcement[]>(initial.announcements)
   const [now, setNow] = useState(new Date())
 
+  const [policies, setPolicies] = useState<Policy[]>(initial.policies)
+  const [policyCategories, setPolicyCategories] = useState<PolicyCategory[]>(initial.policyCategories)
+  const [policyAcknowledgements, setPolicyAcknowledgements] = useState<PolicyAcknowledgement[]>(initial.policyAcknowledgements)
+  const [handbook, setHandbook] = useState<Handbook>(initial.handbook)
+  const [handbookAcknowledgements, setHandbookAcknowledgements] = useState<HandbookAcknowledgement[]>(initial.handbookAcknowledgements)
+  const [handbookSectionAcknowledgements, setHandbookSectionAcknowledgements] = useState<HandbookSectionAcknowledgement[]>(
+    initial.handbookSectionAcknowledgements,
+  )
+  const [translations] = useState<TranslationEntry[]>(initial.translations)
+  const [emailLog, setEmailLog] = useState<SimulatedEmail[]>(initial.emailLog)
+  const [employeeLanguageOverrides, setEmployeeLanguageOverrides] = useState<Record<string, LanguageCode>>(initial.employeeLanguageOverrides)
+
   useEffect(() => {
-    const persisted: PersistedState = { tasks, templates, notifications, announcements, role, currentEmployeeId }
+    const persisted: PersistedState = {
+      tasks,
+      templates,
+      notifications,
+      announcements,
+      role,
+      currentEmployeeId,
+      policies,
+      policyCategories,
+      policyAcknowledgements,
+      handbook,
+      handbookAcknowledgements,
+      handbookSectionAcknowledgements,
+      translations,
+      emailLog,
+      employeeLanguageOverrides,
+    }
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(persisted))
     } catch {
       // storage full or unavailable, ignore for demo purposes
     }
-  }, [tasks, templates, notifications, announcements, role, currentEmployeeId])
+  }, [
+    tasks,
+    templates,
+    notifications,
+    announcements,
+    role,
+    currentEmployeeId,
+    policies,
+    policyCategories,
+    policyAcknowledgements,
+    handbook,
+    handbookAcknowledgements,
+    handbookSectionAcknowledgements,
+    translations,
+    emailLog,
+    employeeLanguageOverrides,
+  ])
 
   // ---- clock tick + simulated reminder/overdue/escalation engine ----
   const remindedRef = useRef<Set<string>>(new Set())
@@ -717,6 +831,345 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     [templates, pushNotification],
   )
 
+  // ---------------------------------------------------------------------
+  // Multilingual: employee preferred-language state
+  // ---------------------------------------------------------------------
+  const getEmployeeLanguage = useCallback(
+    (employeeId: string): LanguageCode => {
+      if (employeeLanguageOverrides[employeeId]) return employeeLanguageOverrides[employeeId]
+      return findEmployee(employeeId)?.preferredLanguage ?? 'en'
+    },
+    [employeeLanguageOverrides],
+  )
+
+  const setEmployeeLanguage = useCallback((employeeId: string, lang: LanguageCode) => {
+    setEmployeeLanguageOverrides((prev) => ({ ...prev, [employeeId]: lang }))
+    toast.success('Preferred language updated')
+  }, [])
+
+  // ---------------------------------------------------------------------
+  // Policies & Procedures
+  // ---------------------------------------------------------------------
+  const getPolicy = useCallback((id: string) => policies.find((p) => p.id === id), [policies])
+
+  const createPolicy = useCallback(
+    (input: { title: string; description: string; categoryId: PolicyCategoryId | string; content: string; requiresAcknowledgement: boolean }): Policy => {
+      const nowIso = new Date().toISOString()
+      const policy: Policy = {
+        id: makeId('pol'),
+        companyId: COMPANY_ID,
+        locationId: LOCATION_ID,
+        title: input.title,
+        description: input.description,
+        categoryId: input.categoryId,
+        content: input.content,
+        originalLanguage: 'en',
+        status: 'Draft',
+        version: 1,
+        createdAt: nowIso,
+        updatedAt: nowIso,
+        createdBy: MANAGER.name,
+        updatedBy: MANAGER.name,
+        requiresAcknowledgement: input.requiresAcknowledgement,
+        versions: [],
+      }
+      setPolicies((prev) => [policy, ...prev])
+      toast.success('Policy draft created', { description: policy.title })
+      return policy
+    },
+    [],
+  )
+
+  const updatePolicyDraft = useCallback(
+    (id: string, patch: { title?: string; description?: string; categoryId?: PolicyCategoryId | string; content?: string; requiresAcknowledgement?: boolean }) => {
+      setPolicies((prev) =>
+        prev.map((p) => {
+          if (p.id !== id) return p
+          if (p.status === 'Draft' && p.versions.length === 0) {
+            // Never published — safe to edit the live fields directly, nobody has read them yet.
+            return {
+              ...p,
+              title: patch.title ?? p.title,
+              description: patch.description ?? p.description,
+              categoryId: patch.categoryId ?? p.categoryId,
+              content: patch.content ?? p.content,
+              requiresAcknowledgement: patch.requiresAcknowledgement ?? p.requiresAcknowledgement,
+              updatedAt: new Date().toISOString(),
+              updatedBy: MANAGER.name,
+            }
+          }
+          return {
+            ...p,
+            draftTitle: patch.title ?? p.draftTitle ?? p.title,
+            draftDescription: patch.description ?? p.draftDescription ?? p.description,
+            draftCategoryId: patch.categoryId ?? p.draftCategoryId ?? p.categoryId,
+            draftContent: patch.content ?? p.draftContent ?? p.content,
+            requiresAcknowledgement: patch.requiresAcknowledgement ?? p.requiresAcknowledgement,
+          }
+        }),
+      )
+    },
+    [],
+  )
+
+  const publishPolicy = useCallback(
+    (id: string, opts: { summaryOfChanges?: string; notify: boolean }) => {
+      const policy = getPolicy(id)
+      if (!policy) return
+      const nowIso = new Date().toISOString()
+      const resolvedTitle = policy.draftTitle ?? policy.title
+      const resolvedDescription = policy.draftDescription ?? policy.description
+      const resolvedContent = policy.draftContent ?? policy.content
+      const resolvedCategory = policy.draftCategoryId ?? policy.categoryId
+      const newVersion = policy.versions.length === 0 ? 1 : policy.version + 1
+
+      const versionEntry = {
+        policyId: policy.id,
+        version: newVersion,
+        title: resolvedTitle,
+        description: resolvedDescription,
+        content: resolvedContent,
+        summaryOfChanges: opts.summaryOfChanges,
+        originalLanguage: policy.originalLanguage,
+        publishedAt: nowIso,
+        publishedBy: MANAGER.name,
+      }
+
+      const updatedPolicy: Policy = {
+        ...policy,
+        title: resolvedTitle,
+        description: resolvedDescription,
+        content: resolvedContent,
+        categoryId: resolvedCategory,
+        status: 'Published',
+        version: newVersion,
+        updatedAt: nowIso,
+        updatedBy: MANAGER.name,
+        publishedAt: nowIso,
+        draftTitle: undefined,
+        draftDescription: undefined,
+        draftContent: undefined,
+        draftCategoryId: undefined,
+        versions: [...policy.versions, versionEntry],
+      }
+      setPolicies((prev) => prev.map((p) => (p.id === id ? updatedPolicy : p)))
+
+      if (opts.notify) {
+        for (const emp of EMPLOYEES) {
+          const lang = getEmployeeLanguage(emp.id)
+          pushNotification(
+            {
+              title: policy.versions.length === 0 ? ti18n('new_policy_published', lang) : ti18n('policy_updated', lang),
+              message: resolvedTitle,
+              type: 'info',
+              targetRole: 'employee',
+              employeeId: emp.id,
+            },
+            { silent: true },
+          )
+          const { subject, bodyHtml } = composePolicyUpdateEmail(updatedPolicy, emp, translations)
+          setEmailLog((prev) => [
+            { id: makeId('email'), to: emp.email, toEmployeeId: emp.id, language: lang, subject, bodyHtml, sentAt: nowIso, relatedType: 'policy', relatedId: policy.id },
+            ...prev,
+          ])
+        }
+        toast.success('Published & employees notified', { description: `${resolvedTitle} · v${newVersion}` })
+      } else {
+        toast.success('Policy published', { description: `${resolvedTitle} · v${newVersion}` })
+      }
+    },
+    [getPolicy, getEmployeeLanguage, pushNotification, translations],
+  )
+
+  const archivePolicy = useCallback((id: string, archived: boolean) => {
+    setPolicies((prev) => prev.map((p) => (p.id === id ? { ...p, archived } : p)))
+    toast.success(archived ? 'Policy archived' : 'Policy restored')
+  }, [])
+
+  const createPolicyCategory = useCallback((name: string) => {
+    setPolicyCategories((prev) => [...prev, { id: makeId('cat'), companyId: COMPANY_ID, name, sortOrder: prev.length }])
+    toast.success('Category created', { description: name })
+  }, [])
+
+  const renamePolicyCategory = useCallback((id: string, name: string) => {
+    setPolicyCategories((prev) => prev.map((c) => (c.id === id ? { ...c, name } : c)))
+    toast.success('Category renamed')
+  }, [])
+
+  const deletePolicyCategory = useCallback((id: string) => {
+    setPolicyCategories((prev) => prev.filter((c) => c.id !== id))
+    setPolicies((prev) => prev.map((p) => (p.categoryId === id ? { ...p, categoryId: 'other' } : p)))
+    toast.success('Category deleted')
+  }, [])
+
+  const acknowledgePolicy = useCallback(
+    (policyId: string) => {
+      const policy = getPolicy(policyId)
+      if (!policy) return
+      setPolicyAcknowledgements((prev) => [
+        ...prev,
+        { id: makeId('pack'), companyId: COMPANY_ID, policyId, policyVersion: policy.version, employeeId: currentEmployeeId, acknowledgedAt: new Date().toISOString() },
+      ])
+      toast.success('Thanks — marked as read and understood', { description: policy.title })
+    },
+    [getPolicy, currentEmployeeId],
+  )
+
+  const remindPendingPolicyEmployees = useCallback(
+    (policyId: string, timing: 'now' | '24h' | '3d' | 'custom') => {
+      const policy = getPolicy(policyId)
+      if (!policy) return
+      if (timing !== 'now') {
+        const label = timing === '24h' ? '24 hours' : timing === '3d' ? '3 days' : 'the scheduled time'
+        toast.success(`Reminder scheduled`, { description: `Pending employees will be reminded in ${label}.` })
+        return
+      }
+      const pendingIds = EMPLOYEES.filter((e) => !policyAcknowledgements.some((a) => a.policyId === policyId && a.policyVersion === policy.version && a.employeeId === e.id)).map(
+        (e) => e.id,
+      )
+      const nowIso = new Date().toISOString()
+      for (const empId of pendingIds) {
+        const emp = findEmployee(empId)
+        if (!emp) continue
+        const lang = getEmployeeLanguage(empId)
+        pushNotification(
+          { title: ti18n('required_reading', lang), message: policy.title, type: 'info', targetRole: 'employee', employeeId: empId },
+          { silent: true },
+        )
+        const { subject, bodyHtml } = composePolicyUpdateEmail(policy, emp, translations)
+        setEmailLog((prev) => [
+          { id: makeId('email'), to: emp.email, toEmployeeId: emp.id, language: lang, subject: `Reminder: ${subject}`, bodyHtml, sentAt: nowIso, relatedType: 'policy', relatedId: policyId },
+          ...prev,
+        ])
+      }
+      toast.success('Reminders sent', { description: `${pendingIds.length} employee${pendingIds.length === 1 ? '' : 's'} notified` })
+    },
+    [getPolicy, policyAcknowledgements, getEmployeeLanguage, pushNotification, translations],
+  )
+
+  // ---------------------------------------------------------------------
+  // Handbook
+  // ---------------------------------------------------------------------
+  const updateHandbookSectionDraft = useCallback((sectionId: string, patch: { title?: string; content?: string; requiresAcknowledgement?: boolean }) => {
+    setHandbook((prev) => ({
+      ...prev,
+      sections: prev.sections.map((s) => {
+        if (s.id !== sectionId) return s
+        if (s.status === 'Draft') {
+          return {
+            ...s,
+            title: patch.title ?? s.title,
+            content: patch.content ?? s.content,
+            requiresAcknowledgement: patch.requiresAcknowledgement ?? s.requiresAcknowledgement,
+          }
+        }
+        return {
+          ...s,
+          draftTitle: patch.title ?? s.draftTitle ?? s.title,
+          draftContent: patch.content ?? s.draftContent ?? s.content,
+          requiresAcknowledgement: patch.requiresAcknowledgement ?? s.requiresAcknowledgement,
+        }
+      }),
+    }))
+  }, [])
+
+  const publishHandbookSection = useCallback((sectionId: string) => {
+    const nowIso = new Date().toISOString()
+    setHandbook((prev) => ({
+      ...prev,
+      updatedAt: nowIso,
+      sections: prev.sections.map((s) => {
+        if (s.id !== sectionId) return s
+        return {
+          ...s,
+          title: s.draftTitle ?? s.title,
+          content: s.draftContent ?? s.content,
+          status: 'Published',
+          version: s.version + 1,
+          updatedAt: nowIso,
+          updatedBy: MANAGER.name,
+          draftTitle: undefined,
+          draftContent: undefined,
+        }
+      }),
+    }))
+    toast.success('Section published')
+  }, [])
+
+  const addHandbookSection = useCallback((title: string) => {
+    setHandbook((prev) => {
+      const section: HandbookSection = {
+        id: makeId('hbsec'),
+        handbookId: 'handbook_main',
+        title,
+        content: '',
+        sortOrder: prev.sections.length,
+        status: 'Draft',
+        requiresAcknowledgement: false,
+        version: 1,
+        updatedAt: new Date().toISOString(),
+        updatedBy: MANAGER.name,
+      }
+      return { ...prev, sections: [...prev.sections, section] }
+    })
+    toast.success('Section added', { description: title })
+  }, [])
+
+  const deleteHandbookSection = useCallback((sectionId: string) => {
+    setHandbook((prev) => ({ ...prev, sections: prev.sections.filter((s) => s.id !== sectionId) }))
+    toast.success('Section removed')
+  }, [])
+
+  const reorderHandbookSections = useCallback((orderedIds: string[]) => {
+    setHandbook((prev) => ({
+      ...prev,
+      sections: prev.sections
+        .map((s) => ({ ...s, sortOrder: orderedIds.indexOf(s.id) }))
+        .sort((a, b) => a.sortOrder - b.sortOrder),
+    }))
+  }, [])
+
+  const remindPendingHandbookAck = useCallback(
+    (timing: 'now' | '24h' | '3d' | 'custom') => {
+      if (timing !== 'now') {
+        const label = timing === '24h' ? '24 hours' : timing === '3d' ? '3 days' : 'the scheduled time'
+        toast.success('Reminder scheduled', { description: `Pending employees will be reminded in ${label}.` })
+        return
+      }
+      const pendingIds = EMPLOYEES.filter((e) => !handbookAcknowledgements.some((a) => a.handbookVersion === handbook.version && a.employeeId === e.id)).map((e) => e.id)
+      for (const empId of pendingIds) {
+        const lang = getEmployeeLanguage(empId)
+        pushNotification(
+          { title: ti18n('handbook_updated', lang), message: 'Employee Handbook', type: 'info', targetRole: 'employee', employeeId: empId },
+          { silent: true },
+        )
+      }
+      toast.success('Reminders sent', { description: `${pendingIds.length} employee${pendingIds.length === 1 ? '' : 's'} notified` })
+    },
+    [handbookAcknowledgements, handbook.version, getEmployeeLanguage, pushNotification],
+  )
+
+  const acknowledgeHandbook = useCallback(() => {
+    setHandbookAcknowledgements((prev) => [
+      ...prev,
+      { id: makeId('hack'), companyId: COMPANY_ID, handbookVersion: handbook.version, employeeId: currentEmployeeId, acknowledgedAt: new Date().toISOString() },
+    ])
+    toast.success('Thanks — marked as read and understood')
+  }, [handbook.version, currentEmployeeId])
+
+  const acknowledgeHandbookSection = useCallback(
+    (sectionId: string) => {
+      const section = handbook.sections.find((s) => s.id === sectionId)
+      if (!section) return
+      setHandbookSectionAcknowledgements((prev) => [
+        ...prev,
+        { id: makeId('hsack'), companyId: COMPANY_ID, sectionId, sectionVersion: section.version, employeeId: currentEmployeeId, acknowledgedAt: new Date().toISOString() },
+      ])
+      toast.success('Thanks — marked as read and understood', { description: section.title })
+    },
+    [handbook.sections, currentEmployeeId],
+  )
+
   const value: AppContextValue = {
     role,
     setRole,
@@ -749,6 +1202,36 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     updateTemplate,
     duplicateTemplate,
     assignTemplate,
+
+    translations,
+    getEmployeeLanguage,
+    setEmployeeLanguage,
+    emailLog,
+
+    policies,
+    policyCategories,
+    policyAcknowledgements,
+    createPolicy,
+    updatePolicyDraft,
+    publishPolicy,
+    archivePolicy,
+    createPolicyCategory,
+    renamePolicyCategory,
+    deletePolicyCategory,
+    acknowledgePolicy,
+    remindPendingPolicyEmployees,
+
+    handbook,
+    handbookAcknowledgements,
+    handbookSectionAcknowledgements,
+    updateHandbookSectionDraft,
+    publishHandbookSection,
+    addHandbookSection,
+    deleteHandbookSection,
+    reorderHandbookSections,
+    acknowledgeHandbook,
+    acknowledgeHandbookSection,
+    remindPendingHandbookAck,
   }
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>

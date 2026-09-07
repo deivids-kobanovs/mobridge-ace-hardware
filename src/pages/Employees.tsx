@@ -9,7 +9,7 @@ import { useApp } from '@/store/AppContext'
 import type { Employee } from '@/types'
 
 export function Employees({ onOpenTask }: { onOpenTask: (id: string) => void }) {
-  const { tasks } = useApp()
+  const { tasks, getEmployeeLanguage } = useApp()
   const [selected, setSelected] = useState<Employee | null>(null)
   const today = todayISO()
 
@@ -30,6 +30,7 @@ export function Employees({ onOpenTask }: { onOpenTask: (id: string) => void }) 
             <EmployeeCard
               key={e.id}
               employee={e}
+              language={getEmployeeLanguage(e.id)}
               assignedToday={todayTasks.length}
               completedToday={completedToday}
               remainingToday={todayTasks.length - completedToday}
